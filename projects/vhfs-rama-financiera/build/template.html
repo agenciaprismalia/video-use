@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<style>
+/*FONTS*/
+:root{--ink:#101010;--slate:#394251;--slate7:#2A313C;--acc:#8492A8;--acc5:#ADB9CC;--acc3:#D6DCE6;--acc1:#F4F6F9;--acc9:#5D6879}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#fff}
+body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.scene{position:absolute;inset:0;overflow:hidden}
+.light{background:#fff;color:var(--slate)}
+.dark{background:var(--slate);color:#fff}
+.accent{background:var(--acc);color:#fff}
+.inner{position:absolute;inset:0}
+.corner{position:absolute;top:52px;right:72px;height:34px}
+.corner svg{height:34px;width:auto;display:block}
+/* logo colouring */
+.logo path{fill:var(--lg-t,#101010)} .logo .st1{fill:var(--lg-s,#2D3947)} .logo .st3{fill:var(--lg-v,#394251)} .logo line{stroke:var(--lg-v,#394251);stroke-width:3}
+.dark .logo,.accent .logo,.neg{--lg-t:#fff;--lg-s:#fff;--lg-v:#fff}
+/* type */
+.tt{font-family:'Inter Tight',sans-serif;letter-spacing:-0.02em}
+.h-xl{font-family:'Inter Tight';font-weight:700;letter-spacing:-0.04em;line-height:.9}
+.h1{font-family:'Inter Tight';font-weight:600;font-size:84px;line-height:1.02;letter-spacing:-0.025em}
+.h2{font-family:'Inter Tight';font-weight:600;font-size:60px;line-height:1.08;letter-spacing:-0.02em}
+.h3{font-family:'Inter Tight';font-weight:600;font-size:40px;line-height:1.15;letter-spacing:-0.01em}
+.body{font-family:'Inter';font-weight:400;font-size:36px;line-height:1.35}
+.lbl{font-family:'Inter';font-weight:500;font-size:34px;line-height:1.2}
+.eyebrow{font-family:'Inter';font-weight:500;font-size:24px;letter-spacing:.24em;text-transform:uppercase;color:var(--acc9)}
+.dark .eyebrow{color:var(--acc5)} .accent .eyebrow{color:var(--slate)}
+.light b,.light strong{font-weight:700;color:var(--slate)}
+.light .soft{color:var(--acc)} .dark .soft{color:var(--acc5)} .accent .soft{color:var(--slate)}
+.light .ink{color:var(--ink)}
+.dark b{font-weight:700;color:#fff} .accent b{font-weight:700;color:var(--slate7)}
+.hl{color:var(--acc)} .dark .hl{color:var(--acc5)} .accent .hl{color:var(--slate7)}
+/* icons */
+svg.ic{width:100%;height:100%;overflow:visible;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+svg.ic .k{stroke:var(--acc)}
+.dark svg.ic .k{stroke:var(--acc5)}
+.disc{border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.disc>i{display:block;width:52%;height:52%}
+.light .disc{background:var(--acc1);box-shadow:inset 0 0 0 3px var(--acc3);color:var(--slate)}
+.dark .disc,.accent .disc{background:#fff;color:var(--slate)}
+.dark .disc svg.ic .k,.accent .disc svg.ic .k{stroke:var(--acc)}
+.disc.inv{background:var(--slate)!important;box-shadow:none!important;color:#fff!important}
+.disc.inv svg.ic .k{stroke:var(--acc5)!important}
+i.icon{display:block}
+.row{display:flex;align-items:center}
+.col{display:flex;flex-direction:column;align-items:center;text-align:center}
+.abs{position:absolute}
+.line{height:3px;background:currentColor;transform-origin:left center}
+.card{background:var(--acc1);border-radius:6px}
+.pill{border:2.5px solid currentColor;border-radius:12px;padding:10px 26px}
+.wd{display:inline-block;white-space:pre}
+/* subtitles */
+#subs{position:absolute;left:0;right:0;bottom:46px;display:flex;justify-content:center;pointer-events:none;z-index:999}
+#subs span{font-family:'Inter';font-weight:500;font-size:34px;line-height:1.3;max-width:1500px;text-align:center;padding:8px 22px;border-radius:6px}
+</style></head>
+<body>
+<div id="stage"></div>
+<div id="subs"><span id="sub"></span></div>
+<script>
+const TL=/*TL*/;
+const LOGO=`/*LOGO*/`;
+const GOB='/*GOB*/';
+const SUBS_ENABLED=false;
+// ---------- timing helpers
+const nrm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+function W(p,word,n=0){const k=nrm(word);let c=0;for(const w of TL.words){if(w.p===p&&nrm(w.w).startsWith(k)){if(c===n)return w.s;c++}}throw new Error('word not found '+p+' '+word)}
+function WE(p,word,n=0){const k=nrm(word);let c=0;for(const w of TL.words){if(w.p===p&&nrm(w.w).startsWith(k)){if(c===n)return w.e;c++}}throw new Error('word not found '+p+' '+word)}
+const PS=p=>TL.segs[p].start, PE=p=>TL.segs[p].end;
+// ---------- icons (64x64, line)
+function gear(cx,cy,r1,r2,n){let d='';for(let i=0;i<n;i++){const a=i*2*Math.PI/n;d+=`M${(cx+r1*Math.cos(a)).toFixed(1)} ${(cy+r1*Math.sin(a)).toFixed(1)}L${(cx+r2*Math.cos(a)).toFixed(1)} ${(cy+r2*Math.sin(a)).toFixed(1)}`}return d}
+const SH='M32 6l20 8v15c0 13-8.5 22-20 27C20.5 51 12 42 12 29V14z';
+const DOC='M14 6h24l12 12v40H14z|M38 6v12h12';
+const I={
+ growth:['M10 56h46','M16 50V40|M28 50V32|M40 50V26|M52 50V18','k:M12 30L26 18l8 7L52 8|k:M43 8h9v9'],
+ advisor:['M32 10a9 9 0 1 1 0 18a9 9 0 1 1 0-18z','M12 56c0-11 9-19 20-19s20 8 20 19','k:M32 37l-3.5 6 3.5 10 3.5-10z'],
+ clock:['M32 14a20 20 0 1 1 0 40a20 20 0 1 1 0-40z','k:M32 22v12l8 6','M26 7h12|M32 7v7','M49 17l3-3'],
+ hourglass:['M18 7h28|M18 57h28','M22 7c0 15 20 15 20 25s-20 10-20 25|M42 7c0 15-20 15-20 25s20 10 20 25','k:M26 50h12l-6-6z'],
+ pin:['M32 58S14 40 14 26a18 18 0 0 1 36 0c0 14-18 32-18 32z','k:M32 19a7 7 0 1 1 0 14a7 7 0 1 1 0-14z'],
+ fastwatch:['M36 18a19 19 0 1 1 0 38a19 19 0 1 1 0-38z','M31 7h10|M36 7v11','k:M36 37l8-8','M52 20l3-3','k:M4 30h11|k:M2 38h12|k:M6 46h9'],
+ chartCheck:['M8 56h50','M14 50V40|M26 50V34|M38 50V28','M12 30l12-9 9 6 12-12','k:M48 30a10 10 0 1 1 0 20a10 10 0 1 1 0-20z|k:M43.5 40l3.5 3.5 6.5-6.5'],
+ bolt:['k:M37 5L15 35h16l-4 24 22-31H33z'],
+ stopwatch:['M32 18a20 20 0 1 1 0 40a20 20 0 1 1 0-40z','M27 6h10|M32 6v12','k:M32 38l9-9','M48 20l3-3'],
+ shPerson:[SH,'k:M32 19a6 6 0 1 1 0 12a6 6 0 1 1 0-12z|k:M22 44c1-6 5-10 10-10s9 4 10 10'],
+ shHouse:[SH,'k:M21 33l11-10 11 10|k:M24.5 30v13h15V30|k:M30 43v-6h4v6'],
+ shChart:[SH,'k:M21 41l7-8 6 5 10-12|k:M38 26h6v6'],
+ building:['M12 57V12h26v45|M38 26h14v31|M8 57h48','k:M19 20h4|k:M28 20h4|k:M19 29h4|k:M28 29h4|k:M19 38h4|k:M28 38h4|k:M43 34h4|k:M43 43h4','M22 57v-9h8v9'],
+ noAsset:['M12 24l20-10 20 10v22L32 56 12 46z|M12 24l20 10 20-10|M32 34v22','k:M8 8l48 48'],
+ drop:['M32 6C24 19 14 29 14 39a18 18 0 0 0 36 0c0-10-10-20-18-33z','k:M38 33.5a7.5 7.5 0 1 0 0 11|k:M25 37h10|k:M25 41.5h10'],
+ gear:['M32 18a14 14 0 1 1 0 28a14 14 0 1 1 0-28z',gear(32,32,15,22,10),'k:M32 26a6 6 0 1 1 0 12a6 6 0 1 1 0-12z'],
+ expand:['k:M26 26h12v12H26z','M22 22L8 8|M8 18V8h10|M42 22L56 8|M46 8h10v10|M22 42L8 56|M8 46v10h10|M42 42l14 14|M56 46v10H46'],
+ nave:['M6 57V31l12-8v8l12-8v8l12-8v8l10-6V10h6v47z|M4 57h56','k:M24 57V46h12v11','k:M12 40h6|k:M44 40h6'],
+ local:['M8 22l5-12h38l5 12z','M8 22c0 4 3 7 6 7s6-3 6-7c0 4 3 7 6 7s6-3 6-7c0 4 3 7 6 7s6-3 6-7c0 4 3 7 6 7s6-3 6-7','M12 29v28h40V29|M8 57h48','k:M28 57V42h10v15','k:M16 36h8v8h-8z'],
+ office:['M16 57V7h32v50|M10 57h44','k:M23 15h5|k:M36 15h5|k:M23 24h5|k:M36 24h5|k:M23 33h5|k:M36 33h5|k:M23 42h5|k:M36 42h5','M28 57v-7h8v7'],
+ house:['M8 30L32 10l24 20','M14 25v32h36V25','k:M27 57V43h10v14','k:M40 33h5v5h-5z'],
+ candles:['M16 10v40|M32 6v32|M48 18v38','k:M12 18h8v20h-8z|k:M28 12h8v16h-8z|k:M44 26h8v18h-8z','M8 58h48'],
+ bond:['M8 10h48v34H8z','M16 20h28|M16 28h20','k:M46 40a7 7 0 1 1 0 14a7 7 0 1 1 0-14z|k:M42 53l-2 9 6-3 6 3-2-9'],
+ pie:['M30 12a22 22 0 1 0 22 22H30z','k:M36 6a22 22 0 0 1 22 22H36z'],
+ vault:['M8 10h48v40H8z|M14 50v6|M50 50v6','k:M32 21a9 9 0 1 1 0 18a9 9 0 1 1 0-18z|k:M32 15v3|k:M32 42v3|k:M20 30h3|k:M41 30h3','M50 24v12'],
+ key:['M20 22a10 10 0 1 1 0 20a10 10 0 1 1 0-20z','k:M30 32h26|k:M48 32v9|k:M41 32v6'],
+ tagX:['M8 32L30 10h22v22L30 54z','M43 17a3 3 0 1 1 0 6a3 3 0 1 1 0-6z','k:M20 30l14 14|k:M34 30L20 44'],
+ calendar:['M8 14h48v44H8z|M8 25h48|M19 7v12|M45 7v12','k:M17 34h4|k:M30 34h4|k:M43 34h4|k:M17 45h4|k:M30 45h4|k:M43 45h4'],
+ coin:['M32 8a24 24 0 1 1 0 48a24 24 0 1 1 0-48z','k:M40 23a11 11 0 1 0 0 18|k:M21 29h15|k:M21 35h15'],
+ percent:['M14 50L50 14','k:M18 12a6 6 0 1 1 0 12a6 6 0 1 1 0-12z|k:M46 40a6 6 0 1 1 0 12a6 6 0 1 1 0-12z'],
+ ruler:['M8 46L46 8l10 10-38 38H8z','k:M20 34l5 5|k:M27 27l3 3|k:M34 20l5 5|k:M41 13l3 3'],
+ noRefi:['M32 6a26 26 0 1 1 0 52a26 26 0 1 1 0-52z','M21 27a12 12 0 0 1 20-5|M41 16v7h-7|M43 37a12 12 0 0 1-20 5|M23 48v-7h7','k:M14 14l36 36'],
+ docSearch:[DOC,'M20 26h18|M20 34h12','k:M42 36a8 8 0 1 1 0 16a8 8 0 1 1 0-16z|k:M48 50l8 8'],
+ docPen:[DOC,'M20 26h22|M20 34h22|M20 42h10','k:M36 50l16-16 5 5-16 16h-5z'],
+ docCheck:[DOC,'k:M22 32l7 7 13-13','M20 48c4-5 7 2 10-2s6 2 12-1'],
+ people:['M22 16a8 8 0 1 1 0 16a8 8 0 1 1 0-16z|M6 56c0-10 7-17 16-17s16 7 16 17','k:M44 20a7 7 0 1 1 0 14a7 7 0 1 1 0-14z|k:M36 41c2-1 5-2 8-2 8 0 14 6 14 15'],
+ globe:['M32 8a24 24 0 1 1 0 48a24 24 0 1 1 0-48z','k:M32 8c-8 7-11 15-11 24s3 17 11 24c8-7 11-15 11-24S40 15 32 8z|k:M9 32h46'],
+ phone:['M20 8l8 1 4 11-6 4c3 7 8 12 15 15l4-6 11 4 1 8c0 4-3 7-7 7C28 52 12 36 12 15c0-4 4-7 8-7z'],
+ mail:['M8 14h48v36H8z','k:M8 14l24 20 24-20'],
+ arrowR:['M6 32h50|M44 20l12 12-12 12'],
+ check:['k:M14 33l12 12 24-26'],
+};
+function iconSVG(name){const parts=I[name];let h='';for(const grp of parts){for(const seg of grp.split('|')){let cls='';let d=seg;if(seg.startsWith('k:')){cls='k';d=seg.slice(2)}h+=`<path class="${cls}" d="${d}" pathLength="1"/>`}}return `<svg class="ic" viewBox="0 0 64 64">${h}</svg>`}
+// ---------- animation registry
+const ANIMS=[];
+const clamp=x=>Math.max(0,Math.min(1,x));
+const eo=x=>1-Math.pow(1-x,3);
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c1=1.6,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const fmt=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+// ---------- scenes
+const SC=[];
+function scene(t0,bg,html,opt){SC.push({t0,bg,html,opt})}
+const pend=[]; // scenes built later
+/*SCENES*/
+</script>
+<script>
+/*BUILD*/
+</script>
+</body></html>
