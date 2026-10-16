@@ -2,12 +2,12 @@
 # OVR replaces individual paragraphs with separately generated takes.
 import json,subprocess,unicodedata,difflib,os
 D='/tmp/claude-0/-home-user-video-use/75d14596-cf69-57f6-b09c-3e5adc4db6d4/scratchpad/vhfs/'
-SRC=D+'vo/el/takeC.mp3'; STT=D+'vo/el/takeC.stt.json'
+SRC=D+'vo/el/takeD.mp3'; STT=D+'vo/el/takeD.stt.json'
 OVR={}
 for f in ['p13.mp3','p13_tmp.wav']:
     if os.path.exists(D+'vo/el/'+f): OVR[13]=(D+'vo/el/'+f, D+'vo/el/'+f.rsplit('.',1)[0]+'.stt.json'); break
 INTRO=0.7; TAIL=7.0
-GAPS=[0.4,0.4,0.8,0.4,0.8,0.4,0.8,0.4,0.8,0.4,0.4,0.8,0.8,0.6,0]
+GAPS=[0.4,0.4,0.8,0.4,0.8,0.4,0.8,0.4,0.4,0.8,0.8,0.6,0]
 paras=json.load(open(D+'vo/paras.json'))
 def norm(w): return ''.join(c for c in unicodedata.normalize('NFD',w.lower()) if c.isalnum())
 def align(tw,stt):
