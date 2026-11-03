@@ -1,7 +1,7 @@
 import json,subprocess,re,unicodedata,difflib
 D='/tmp/claude-0/-home-user-video-use/75d14596-cf69-57f6-b09c-3e5adc4db6d4/scratchpad/filicor/'
 TEMPO=1.0; INTRO=0.7; TAIL=7.0
-GAPS=[0.8,0.35,0.8,0.8,0.35,0.8,0.8,0.8,0.4,0.8,0]
+GAPS=[0.8,0.8,0.35,0.8,0.8,0.8,0.35,0.35,0.8,0.35,0.8,0]
 paras=json.load(open(D+'vo/paras.json'))
 def norm(w): return ''.join(c for c in unicodedata.normalize('NFD',w.lower()) if c.isalnum())
 t=INTRO; words=[]; segs=[]; parts=[]

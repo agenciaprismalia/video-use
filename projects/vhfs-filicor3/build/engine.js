@@ -15,7 +15,7 @@ document.querySelectorAll('[data-a]').forEach(el=>{
   const a={el,type:el.dataset.a,at:+el.dataset.at,d:el.dataset.d?+el.dataset.d:null};
   if(a.type==='words'){a.w=[];splitWords(el,a.w)}
   if(a.type==='draw'){a.paths=[...el.querySelectorAll('path')];a.paths.forEach(p=>{p.style.strokeDasharray='1 1'})}
-  if(a.type==='count'){a.from=+el.dataset.from;a.to=+el.dataset.to}
+  if(a.type==='count'){a.from=+el.dataset.from;a.to=+el.dataset.to;a.raw=!!el.dataset.raw}
   ANIMS.push(a);
 });
 const OUTS=[...document.querySelectorAll('[data-out]')].map(el=>({el,t:+el.dataset.out}));
@@ -46,7 +46,7 @@ function render(t){
      case 'grow':e.style.transform=`scaleX(${eio(x)})`;break;
      case 'growY':e.style.transform=`scaleY(${eio(x)})`;break;
      case 'wipe':e.style.clipPath=`inset(0 ${((1-eio(x))*100).toFixed(3)}% 0 0)`;e.style.opacity=x>0?1:0;break;
-     case 'count':{const v=a.from+(a.to-a.from)*eo(x);e.textContent=fmt(v);break}
+     case 'count':{const v=a.from+(a.to-a.from)*eo(x);e.textContent=a.raw?String(Math.round(v)):fmt(v);break}
      case 'words':{const st=0.075;a.w.forEach((w,j)=>{const xx=clamp((t-a.at-j*st)/0.45);const kk=eo(xx);w.style.opacity=clamp(xx*1.8);w.style.transform=`translateY(${(1-kk)*26}px)`});break}
     }}
   for(const o of OUTS){const x=clamp((t-o.t)/0.35);o.el.style.opacity=1-x;}
