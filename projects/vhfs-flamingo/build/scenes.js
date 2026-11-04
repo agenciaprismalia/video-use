@@ -36,15 +36,21 @@ scene(PS(1)-0.35,'accent',`
  <div class="abs row" style="left:1270px;top:700px;gap:30px">${disc('tent',W(1,'camping')-0.15,120)}${T('h3','Camping','up',W(1,'camping'),'color:#fff')}</div>
 `);
 
-// 3 · Activo principal — light
+// 3 · Activo principal — light, con fotos de Albir Garden en marco
+const feat=(y,icon,at,html)=>`<div class="abs row" style="left:160px;top:${y}px;gap:28px">${disc(icon,at-0.15,100)}${T('lbl',html,'up',at,'font-size:32px')}</div>`;
+const photo=(src,at,pos='center')=>`<img src="img/${src}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${pos};transform-origin:center" ${A('kb',at,7)}>`;
 scene(PS(2)-0.35,'light',`
  ${eyebrow(160,170,'Activo principal',PS(2)-0.1)}
- ${box(160,215,1150,T('h1','Albir Garden <b>Resort</b>','words',W(2,'albir')-0.15))}
- <div class="abs row" style="left:160px;top:330px;gap:16px" ${A('up',W(2,'lalf')-0.2)}>${ico('pin',W(2,'lalf')-0.1,48,'color:var(--acc)')}<span class="lbl soft">L'Alfàs del Pi · Alicante</span></div>
- <div class="abs" style="left:1330px;top:150px">${disc('sun',W(2,'principal')-0.2,300)}</div>
- ${colItem(400,500,'people',W(2,'familias')-0.2,'Complejo vacacional<br>para familias',150)}
- ${colItem(960,500,'pool',W(2,'piscinas')-0.2,'Piscinas y parque<br>acuático propio',150)}
- ${colItem(1520,500,'globe',W(2,'norte')-0.3,'Turismo del<br>norte de Europa',150)}
+ ${box(160,215,780,T('h1','Albir Garden <b>Resort</b>','words',W(2,'albir')-0.15,'font-size:76px'))}
+ <div class="abs row" style="left:160px;top:320px;gap:16px" ${A('up',W(2,'lalf')-0.2)}>${ico('pin',W(2,'lalf')-0.1,46,'color:var(--acc)')}<span class="lbl soft">L'Alfàs del Pi · Alicante</span></div>
+ ${feat(450,'people',W(2,'familias')-0.2,'Complejo vacacional<br>para familias')}
+ ${feat(590,'pool',W(2,'piscinas')-0.2,'Piscinas y parque<br>acuático propio')}
+ ${feat(730,'globe',W(2,'norte')-0.3,'Turismo del<br>norte de Europa')}
+ <div class="abs" style="left:960px;top:170px;width:800px;height:640px;border-radius:8px;overflow:hidden;background:var(--acc1);box-shadow:0 0 0 1px var(--acc3)" ${A('wipe',W(2,'principal')-0.3,0.9)}>
+  ${photo('albir_entrada.jpg',W(2,'principal')-0.3,'center 40%')}
+  ${photo('albir_piscinas.jpg',W(2,'complejo')-0.2)}
+  ${photo('albir_aerea.jpg',W(2,'parque')-0.2)}
+ </div>
 `);
 
 // 4 · Cifras — dark
