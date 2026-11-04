@@ -25,7 +25,7 @@ scene(0,'light',`
 // 2 · El grupo — accent
 scene(PS(1)-0.35,'accent',`
  ${eyebrow(160,160,'Detrás de la operación',PS(1)-0.1)}
- ${box(160,210,1500,T('h1','Grupo <b>Suncomfort</b>','words',W(1,'grupo')-0.1,'color:#fff'))}
+ ${box(160,210,1500,T('h1','Grupo <b>Sun Confort</b>','words',W(1,'grupo')-0.1,'color:#fff'))}
  <div class="abs row" style="left:150px;top:400px;gap:40px">
   ${T('h-xl','+30','pop',W(1,'treinta')-0.2,'font-size:220px;color:#fff')}
   <div>${T('h2','años','up',W(1,'años')-0.2,'color:#fff')}${T('body','de trayectoria en el alojamiento<br>turístico de <b>Alicante</b>','words',W(1,'alojamiento')-0.2,'color:var(--slate7);margin-top:8px')}</div>
@@ -156,7 +156,7 @@ scene(PS(11)-0.35,'light',`
  ${box(0,485,1920,T('h2','Financiación privada <b>para empresas</b>','words',PS(11)+0.5,'text-align:center'))}
  ${box(0,600,1920,T('eyebrow','Relación con Inversores','fade',W(11,'relación')-0.1,'text-align:center'))}
  <div class="abs row" style="left:0;width:1920px;top:650px;justify-content:center;gap:28px">
-   ${pill('globe','www.vhfs.es',W(11,'inversores')-0.1)}${pill('phone','914 516 306',W(11,'inversores')+0.15)}${pill('mail','info@vhfs.es',W(11,'inversores')+0.4)}
+   ${pill('globe','www.vhfs.es',W(11,'inversores')-0.1)}${pill('phone','914 516 306',W(11,'inversores')+0.15)}${pill('mail','inversores@vanniloholding.com',W(11,'inversores')+0.4)}
  </div>
  <div class="abs" style="left:460px;top:868px;width:1000px;height:1px;background:var(--acc3);transform-origin:center" ${A('grow',END,0.8)}></div>
  <div class="abs row" style="left:0;width:1920px;top:886px;justify-content:center;gap:22px" ${A('fade',END+0.4,0.6)}>
