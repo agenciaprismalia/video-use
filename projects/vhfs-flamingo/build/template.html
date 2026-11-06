@@ -62,7 +62,7 @@ i.icon{display:block}
 const TL=/*TL*/;
 const LOGO=`/*LOGO*/`;
 const GOB='/*GOB*/';
-const SUBS_ENABLED=false;
+const SUBS_ENABLED=true;
 // ---------- timing helpers
 const nrm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 function W(p,word,n=0){const k=nrm(word);let c=0;for(const w of TL.words){if(w.p===p&&nrm(w.w).startsWith(k)){if(c===n)return w.s;c++}}throw new Error('word not found '+p+' '+word)}
@@ -73,6 +73,8 @@ function gear(cx,cy,r1,r2,n){let d='';for(let i=0;i<n;i++){const a=i*2*Math.PI/n
 const SH='M32 6l20 8v15c0 13-8.5 22-20 27C20.5 51 12 42 12 29V14z';
 const DOC='M14 6h24l12 12v40H14z|M38 6v12h12';
 const I={
+ shCheck:[SH,'k:M23 32l7 7 12-13'],
+ flow:['M8 20h36|M36 12l8 8-8 8','k:M56 44H20|k:M28 36l-8 8 8 8'],
  tent:['M6 54L32 10l26 44z|M4 54h56','k:M32 54L24 38h16z|k:M32 10v-4'],
  pool:['M8 40c5-4 9-4 14 0s9 4 14 0 9-4 14 0 6 3 8 2','k:M8 50c5-4 9-4 14 0s9 4 14 0 9-4 14 0 6 3 8 2','M22 34V12a5 5 0 0 1 10 0|M38 34V12a5 5 0 0 1 10 0|M22 20h16|M22 28h16'],
  star:['M32 6l7.6 16.4 17.4 2-12.9 12 3.5 17.6L32 45.6 16.4 54l3.5-17.6L7 24.4l17.4-2z'],

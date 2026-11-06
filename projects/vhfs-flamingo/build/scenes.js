@@ -1,4 +1,4 @@
-// helpers (same system as the rama financiera video)
+// Flamingo v4 — según «Flamingo · Instrucciones gráficas para el vídeo»
 const A=(a,at,d,extra='')=>`data-a="${a}" data-at="${at.toFixed(3)}"${d?` data-d="${d}"`:''} ${extra}`;
 const OUT=t=>`data-out="${t.toFixed(3)}"`;
 function disc(icon,at,size=150,cls='',style=''){return `<div class="disc ${cls}" style="width:${size}px;height:${size}px;${style}" ${A('pop',at,0.55)}><i class="icon" data-icon="${icon}" ${A('draw',at+0.12,1.0)}></i></div>`}
@@ -7,167 +7,195 @@ const box=(x,y,w,inner,style='')=>`<div class="abs" style="left:${x}px;top:${y}p
 const T=(cls,html,a,at,style='',extra='')=>`<div class="${cls}" style="${style}" ${A(a,at,null,extra)}>${html}</div>`;
 const cnt=(from,to,at,d=0.9,raw=false)=>`<span ${A('count',at,d,`data-from="${from}" data-to="${to}"${raw?' data-raw="1"':''}`)}>${raw?to:fmt(to)}</span>`;
 const NB=' ';
-const eyebrow=(x,y,txt,at)=>box(x,y,1300,T('eyebrow',txt,'left',at));
-const chip=(icon,txt,at)=>`<div class="card row" style="padding:22px 38px 22px 26px;gap:22px" ${A('up',at)}>${ico(icon,at+0.1,60,'color:var(--slate)')}<div class="lbl">${txt}</div></div>`;
-const colItem=(cx,y,icon,at,label,size=150,sub='',subAt=0,lblColor='')=>`<div class="abs col" style="left:${cx-220}px;top:${y}px;width:440px">${disc(icon,at,size)}${T('lbl',label,'up',at+0.15,'margin-top:26px;'+lblColor)}${sub?T('body soft',sub,'up',subAt||at+0.3,'font-size:28px;margin-top:8px'):''}</div>`;
+// rótulo de sección: versalitas espaciadas en #8492A8
+const eyebrow=(x,y,txt,at,color='#8492A8')=>box(x,y,1300,T('eyebrow',txt,'left',at,`color:${color}`));
+const chip=(icon,txt,at,style='')=>`<div class="row" style="background:#F4F6F9;border-radius:8px;padding:20px 32px 20px 22px;gap:20px;${style}" ${A('up',at)}>${ico(icon,at+0.1,52,'color:#394251')}<div class="lbl" style="color:#394251;font-size:30px">${txt}</div></div>`;
+const photo=(src,at,pos='center')=>`<img src="img/${src}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${pos};transform-origin:center" ${A('kb',at,8)}>`;
+const frame=(x,y,w,h,at,inner)=>`<div class="abs" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:8px;overflow:hidden;background:#F4F6F9;box-shadow:0 0 0 1px #D6DCE6" ${A('wipe',at,0.9)}>${inner}</div>`;
 
-// 1 · Apertura — light
-scene(0,'light',`
- <div class="abs row" style="left:0;width:1920px;top:200px;justify-content:center">
-  <div class="pill eyebrow" style="border-color:var(--acc3);padding:12px 30px;letter-spacing:.28em" ${A('up',0.25)}>Oportunidad de inversión</div></div>
- ${box(0,270,1920,T('h-xl','Flamingo','up',W(0,'flamingo')-0.2,'font-size:200px;text-align:center;color:var(--slate)'))}
- <div class="abs row" style="left:0;width:1920px;top:540px;justify-content:center;gap:32px">
-  ${chip('office','Sector hotelero',W(0,'sector')-0.2)}${chip('sun','Costa Blanca',W(0,'costa')-0.2)}
+// 1a · Apertura — azul pizarra: trayectoria de VHFS
+scene(0,'dark',`
+ <div class="abs row" style="left:0;width:1920px;top:300px;justify-content:center;gap:180px">
+  <div class="col">${T('h-xl',cnt(0,120,W(0,'120')-0.2,1.2,true),'up',W(0,'120')-0.3,'font-size:200px;color:#fff')}${T('lbl','operaciones cerradas','up',W(0,'operaciones')-0.1,'color:var(--acc5);margin-top:10px')}</div>
+  <div style="width:2px;height:300px;background:var(--acc9)" ${A('growY',W(0,'18')-0.5,0.5)}></div>
+  <div class="col">${T('h-xl','18,1'+NB+'M€','up',W(0,'18')-0.2,'font-size:200px;color:#fff;white-space:nowrap')}${T('lbl','financiados','up',W(0,'financiados')-0.2,'color:var(--acc5);margin-top:10px')}</div>
  </div>
- ${box(0,720,1920,T('body soft','Operación estructurada por <b>VHFS</b>','words',W(0,'estructurada')-0.1,'text-align:center;font-size:32px'))}
+ ${box(0,720,1920,T('body','Cifras a cierre de octubre de 2026','fade',W(0,'financiados'),'text-align:center;font-size:26px;color:var(--acc5)'))}
+`,{noCorner:true});
+
+// 1b · Apertura — blanco: Vannilo Holding Financial Services presenta Flamingo
+scene(W(0,'vannilo')-0.4,'light',`
+ <div class="abs" style="left:160px;top:150px;width:560px" ${A('wipe',W(0,'vannilo')-0.2,0.9)}>${LOGO}</div>
+ ${box(160,300,800,T('lbl','Vannilo Holding Financial Services presenta','words',W(0,'vannilo')+0.2,'color:#101010;font-weight:400'))}
+ <div class="abs" style="left:160px;top:370px"><div class="pill eyebrow" style="border-color:#D6DCE6;padding:12px 28px;letter-spacing:.28em;color:#8492A8" ${A('up',W(0,'oportunidad')-0.2)}>Oportunidad de inversión</div></div>
+ <div class="abs row" style="left:160px;top:460px;gap:20px">${chip('office','Hotelero',W(0,'hotelero')-0.2)}${chip('sun','Costa Blanca',W(0,'costa')-0.2)}</div>
+ ${box(150,580,900,T('h-xl','Flamingo','up',W(0,'flamingo')-0.15,'font-size:190px;color:#394251'))}
+ ${frame(1080,150,680,760,W(0,'sector')-0.3,photo('albir_piscinas.jpg',W(0,'sector')-0.3))}
+`,{noCorner:true});
+
+// 2 · Estructura del grupo — organigrama
+const node=(x,y,w,title,sub,at,on)=>`<div class="abs" style="left:${x}px;top:${y}px;width:${w}px;height:150px;border-radius:8px;padding:26px 24px;background:${on?'#8492A8':'#F4F6F9'};text-align:center" ${A(on?'pop':'up',at,on?0.5:0.6)}>
+  <div class="h3" style="font-size:34px;color:${on?'#fff':'#ADB9CC'}">${title}</div><div class="body" style="font-size:22px;margin-top:6px;color:${on?'#fff':'#ADB9CC'}">${sub}</div></div>`;
+const NX=[160,580,1000,1340],NW=[400,400,320,420],NY=600;
+scene(PS(1)-0.35,'light',`
+ ${eyebrow(160,150,'Estructura del grupo',PS(1)-0.1)}
+ <div class="abs" style="left:760px;top:230px;width:400px;height:120px;border-radius:8px;background:#394251;display:flex;align-items:center;justify-content:center" ${A('pop',W(1,'grupo')-0.1,0.5)}><span class="h3" style="color:#fff">Grupo Sun Confort</span></div>
+ <div class="abs" style="left:959px;top:350px;width:2px;height:90px;background:#D6DCE6;transform-origin:top" ${A('growY',W(1,'reúne')-0.3,0.4)}></div>
+ <div class="abs" style="left:360px;top:440px;width:1140px;height:2px;background:#D6DCE6;transform-origin:center" ${A('grow',W(1,'reúne')-0.1,0.6)}></div>
+ ${NX.map((x,i)=>`<div class="abs" style="left:${x+NW[i]/2-1}px;top:440px;width:2px;height:${NY-440}px;background:#D6DCE6;transform-origin:top" ${A('growY',W(1,'reúne')+0.3,0.4)}></div>`).join('')}
+ ${node(NX[0],NY,NW[0],'Flamingo Albir','Albir Garden Resort',W(1,'reúne')+0.5,false)}
+ ${node(NX[1],NY,NW[1],'Sorito Albir','Camping La Media Legua · Taiga Benidorm',W(1,'reúne')+0.6,false)}
+ ${node(NX[2],NY,NW[2],'Sant Chaume','Hotel Agua Azul',W(1,'hoteles')-0.1,false)}
+ ${node(NX[3],NY,NW[3],'Roseroba','Apartamentos San Jaime',W(1,'apartamentos')-0.1,false)}
+ ${node(NX[0],NY,NW[0],'Flamingo Albir','Albir Garden Resort',W(1,'flamingo')-0.1,true)}
+ ${node(NX[1],NY,NW[1],'Sorito Albir','Camping La Media Legua · Taiga Benidorm',W(1,'sorito')-0.1,true)}
+ <div class="abs" style="left:160px;top:790px;width:820px;height:2px;background:#8492A8;transform-origin:left" ${A('grow',W(1,'sorito')+0.4,0.6)}></div>
+ ${box(160,810,820,T('eyebrow','Empresas cotitulares del préstamo','fade',W(1,'sorito')+0.6,'color:#8492A8;text-align:center'))}
+ ${frame(1340,150,420,280,W(1,'albir',1)-0.2,photo('albir_aerea.jpg',W(1,'albir',1)-0.2))}
 `);
 
-// 2 · El grupo — accent
-scene(PS(1)-0.35,'accent',`
- ${eyebrow(160,160,'Detrás de la operación',PS(1)-0.1)}
- ${box(160,210,1500,T('h1','Grupo <b>Sun Confort</b>','words',W(1,'grupo')-0.1,'color:#fff'))}
- <div class="abs row" style="left:150px;top:400px;gap:40px">
-  ${T('h-xl','+30','pop',W(1,'treinta')-0.2,'font-size:220px;color:#fff')}
-  <div>${T('h2','años','up',W(1,'años')-0.2,'color:#fff')}${T('body','de trayectoria en el alojamiento<br>turístico de <b>Alicante</b>','words',W(1,'alojamiento')-0.2,'color:var(--slate7);margin-top:8px')}</div>
- </div>
- <div class="abs" style="left:1200px;top:380px;width:2px;height:420px;background:#fff;opacity:.6;transform-origin:top" ${A('growY',W(1,'hoteles')-0.4,0.6)}></div>
- <div class="abs row" style="left:1270px;top:400px;gap:30px">${disc('office',W(1,'hoteles')-0.15,120)}${T('h3','Hoteles','up',W(1,'hoteles'),'color:#fff')}</div>
- <div class="abs row" style="left:1270px;top:550px;gap:30px">${disc('building',W(1,'apartamentos')-0.15,120)}${T('h3','Apartamentos','up',W(1,'apartamentos'),'color:#fff')}</div>
- <div class="abs row" style="left:1270px;top:700px;gap:30px">${disc('tent',W(1,'camping')-0.15,120)}${T('h3','Camping','up',W(1,'camping'),'color:#fff')}</div>
-`);
-
-// 3 · Activo principal — light, con fotos de Albir Garden en marco
-const feat=(y,icon,at,html)=>`<div class="abs row" style="left:160px;top:${y}px;gap:28px">${disc(icon,at-0.15,100)}${T('lbl',html,'up',at,'font-size:32px')}</div>`;
-const photo=(src,at,pos='center')=>`<img src="img/${src}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${pos};transform-origin:center" ${A('kb',at,7)}>`;
+// 3 · Flamingo Albir — fotos y fichas
 scene(PS(2)-0.35,'light',`
- ${eyebrow(160,170,'Activo principal',PS(2)-0.1)}
- ${box(160,215,780,T('h1','Albir Garden <b>Resort</b>','words',W(2,'albir')-0.15,'font-size:76px'))}
- <div class="abs row" style="left:160px;top:320px;gap:16px" ${A('up',W(2,'lalf')-0.2)}>${ico('pin',W(2,'lalf')-0.1,46,'color:var(--acc)')}<span class="lbl soft">L'Alfàs del Pi · Alicante</span></div>
- ${feat(450,'people',W(2,'familias')-0.2,'Complejo vacacional<br>para familias')}
- ${feat(590,'pool',W(2,'piscinas')-0.2,'Piscinas y parque<br>acuático propio')}
- ${feat(730,'globe',W(2,'norte')-0.3,'Turismo del<br>norte de Europa')}
- <div class="abs" style="left:960px;top:170px;width:800px;height:640px;border-radius:8px;overflow:hidden;background:var(--acc1);box-shadow:0 0 0 1px var(--acc3)" ${A('wipe',W(2,'principal')-0.3,0.9)}>
-  ${photo('albir_entrada.jpg',W(2,'principal')-0.3,'center 40%')}
-  ${photo('albir_piscinas.jpg',W(2,'complejo')-0.2)}
-  ${photo('albir_aerea.jpg',W(2,'parque')-0.2)}
+ ${eyebrow(160,150,'Empresa cotitular 01',PS(2)-0.1)}
+ ${box(160,195,820,T('h1','Flamingo Albir','words',W(2,'flamingo')-0.1,'font-size:76px;color:#394251'))}
+ ${box(160,285,820,T('h3','Albir Garden Resort','up',W(2,'flamingo')+0.3,'color:#8492A8'))}
+ <div class="abs col" style="left:160px;top:400px;gap:20px;align-items:flex-start">
+  ${chip('clock','Más de 30 años de trayectoria',W(2,'30')-0.2)}
+  ${chip('pin',"L'Alfàs del Pi",W(2,'lalf')-0.2)}
+  ${chip('pool','Resort familiar con parque acuático',W(2,'familias')-0.2)}
+  ${chip('globe','Turismo del norte de Europa',W(2,'norte')-0.3)}
  </div>
+ ${frame(1000,150,760,780,PS(2)-0.2,
+   photo('albir_entrada.jpg',PS(2)-0.2,'center 40%')+photo('albir_edificios.jpg',W(2,'trayectoria')-0.2)+photo('albir_piscinas_vista.jpg',W(2,'complejo')-0.2)+photo('albir_parque_aereo.jpg',W(2,'parque')-0.3)+photo('albir_toboganes.jpg',W(2,'norte')-0.2))}
 `);
 
-// 4 · Cifras — dark
-const kv=(label,val,at,first=false)=>`${first?'':`<div style="height:2px;background:var(--acc9);margin:34px 0 28px" ${A('grow',at-0.2,0.6)}></div>`}${T('eyebrow',label,'fade',at)}${T('h-xl',val,'up',at+0.05,'font-size:76px;margin-top:12px;color:#fff')}`;
-function rev(){const base=830,scale=28,bw=200;const rows=[['2022',9.4,'Más de 9,4'+NB+'M€',W(3,'nueve')-0.2,160+60],['2025',14.7,'Más de 14,7'+NB+'M€',W(3,'catorce')-0.2,160+380]];
- return rows.map(([y,v,l,at,x],i)=>{const h=Math.round(v*scale);return `<div class="abs" style="left:${x}px;top:${base-h}px;width:${bw}px;height:${h}px;background:${i?'var(--acc5)':'var(--acc9)'};transform-origin:bottom" ${A('growY',at,0.8)}></div>
-  <div class="abs" style="left:${x-60}px;top:${base-h-58}px;width:${bw+120}px;text-align:center" ${A('up',at+0.5)}><span class="lbl" style="color:#fff;font-weight:600;white-space:nowrap">${l}</span></div>
-  <div class="abs lbl" style="left:${x}px;top:${base+18}px;width:${bw}px;text-align:center;color:var(--acc5)" ${A('fade',at,0.4)}>${y}</div>`}).join('')+
-  `<div class="abs" style="left:${160+60+bw+20}px;top:${base-260}px;width:100px;height:60px;color:var(--acc5)" ${A('fade',W(3,'catorce')-0.1,0.4)}><svg class="ic" viewBox="0 0 100 60" style="stroke-width:3"><path d="M6 50L90 12M76 10l14 2-4 14"/></svg></div>`}
+// 3b · Flamingo Albir — facturación y EBITDA (azul pizarra)
+const REV=[['2022',9.4],['2023',11.3],['2024',13.4],['2025',14.7]];
+function revBars(){const x0=160,bw=130,gap=50,base=800,scale=30;const t0=W(3,'facturación')-0.2;
+ return REV.map(([y,v],i)=>{const h=Math.round(v*scale),x=x0+i*(bw+gap),at=i==0?W(3,'2022')-0.3:i==3?W(3,'2025')-0.3:t0+0.6+i*0.5;
+  return `<div class="abs" style="left:${x}px;top:${base-h}px;width:${bw}px;height:${h}px;background:${i==3?'#ADB9CC':'#8492A8'};transform-origin:bottom" ${A('growY',at,0.7)}></div>
+  <div class="abs" style="left:${x-40}px;top:${base-h-52}px;width:${bw+80}px;text-align:center" ${A('up',at+0.4)}><span class="lbl" style="color:#fff;font-weight:600;font-size:28px;white-space:nowrap">${String(v).replace('.',',')}${NB}M€</span></div>
+  <div class="abs lbl" style="left:${x}px;top:${base+16}px;width:${bw}px;text-align:center;color:#ADB9CC;font-size:26px" ${A('fade',at,0.4)}>${y}</div>`}).join('')}
+const EB=[['2025','3,93',3.93,W(3,'ebitda')-0.1],['A 31/08/2026','3,88',3.88,W(3,'prácticamente')-0.2]];
 scene(PS(3)-0.35,'dark',`
- ${eyebrow(160,150,'Facturación del grupo',PS(3)-0.1)}
- ${box(160,195,900,T('h2','Crecimiento <span class="hl">2022 – 2025</span>','words',W(3,'facturación')-0.1))}
- <div class="abs" style="left:160px;top:830px;width:820px;height:2px;background:var(--acc9);transform-origin:left" ${A('grow',W(3,'facturación'),0.7)}></div>
- ${rev()}
- <div class="abs" style="left:1140px;top:280px;width:620px;height:520px;background:var(--slate7);border-radius:6px;padding:56px 60px" ${A('up',W(3,'ebitda')-0.3,0.6)}>
-  ${kv('EBITDA','Más de 3,9'+NB+'M€',W(3,'ebitda'),true)}
-  ${kv('Patrimonio neto','Más de 10'+NB+'M€',W(3,'patrimonio'))}
+ ${eyebrow(160,150,'Flamingo Albir · Facturación',PS(3)-0.1)}
+ <div class="abs row" style="left:160px;top:200px;gap:16px" ${A('up',W(3,'auditadas')-0.3)}><div class="row" style="background:#2A313C;border-radius:8px;padding:14px 26px 14px 18px;gap:16px">${ico('docCheck',W(3,'auditadas')-0.2,44,'color:#ADB9CC')}<span class="lbl" style="color:#fff;font-size:28px">Cuentas auditadas</span></div></div>
+ <div class="abs" style="left:150px;top:800px;width:740px;height:2px;background:#5D6879;transform-origin:left" ${A('grow',W(3,'facturación')-0.3,0.7)}></div>
+ ${revBars()}
+ <div class="abs" style="left:1000px;top:200px;width:760px;height:690px;background:#2A313C;border-radius:8px;padding:50px 60px" ${A('up',W(3,'agosto')-0.4,0.6)}>
+  ${T('eyebrow','EBITDA','fade',W(3,'agosto')-0.2,'color:#ADB9CC')}
+  ${EB.map(([lab,val,v,at],i)=>{const w=Math.round(v/4*520);return `<div style="margin-top:${i?44:40}px">${T('lbl',lab,'fade',at,'color:#ADB9CC;font-size:26px')}
+   <div class="row" style="gap:24px;margin-top:12px"><div style="width:${w}px;height:70px;background:${i?'#ADB9CC':'#8492A8'};transform-origin:left" ${A('grow',at,0.7)}></div>${T('h-xl',val+NB+'M€','up',at+0.4,'font-size:56px;color:#fff;white-space:nowrap')}</div></div>`}).join('')}
+  ${T('body','Hasta agosto, prácticamente igual que todo 2025','up',W(3,'anterior')-0.3,'color:#ADB9CC;font-size:26px;margin-top:44px')}
  </div>
 `);
 
-// 5 · Segunda sociedad — accent
+// 4 · Sorito Albir — Taiga Benidorm (gris azulado)
 scene(PS(4)-0.35,'accent',`
- ${eyebrow(160,160,'La segunda sociedad',PS(4)-0.1)}
- <div class="abs row" style="left:160px;top:230px;gap:30px" ${A('up',W(4,'antiguo')-0.2)}>${ico('tent',W(4,'antiguo')-0.1,64,'color:var(--slate7)')}<span class="lbl" style="color:var(--slate7)">Antiguo Camping La Media Legua · Benidorm</span></div>
- <div class="abs" style="left:190px;top:310px;width:3px;height:70px;background:#fff;transform-origin:top" ${A('growY',W(4,'relanzado')-0.3,0.5)}></div>
- ${box(160,400,1100,T('lbl','Relanzado en 2026 como','up',W(4,'relanzado')-0.1,'color:var(--slate7)'))}
- ${box(150,450,1200,T('h-xl','Taiga Benidorm','up',W(4,'taiga')-0.2,'font-size:140px;color:#fff'))}
- <div class="abs row" style="left:160px;top:640px;gap:14px">${[0,1,2,3,4].map(i=>`<div style="width:62px;height:62px;color:#fff">${ico('star',W(4,'cinco')-0.1+i*0.12,62)}</div>`).join('')}<span class="h3" style="color:#fff;margin-left:16px" ${A('up',W(4,'estrellas')-0.1)}>Camping de cinco estrellas</span></div>
- <div class="abs" style="left:1260px;top:250px;width:500px;height:560px;background:#fff;border-radius:6px;padding:56px 50px" ${A('up',W(4,'seis')-0.3,0.6)}>
-  ${T('eyebrow','En solo','fade',W(4,'seis')-0.1)}
-  ${T('h-xl','6 meses','up',W(4,'seis'),'font-size:96px;margin-top:14px;color:var(--slate)')}
-  <div style="height:2px;background:var(--acc3);margin:36px 0 30px" ${A('grow',W(4,'superado')-0.2,0.6)}></div>
-  ${T('h3','ha superado la facturación <b>de todo 2025</b>','words',W(4,'superado')-0.1,'color:var(--slate)')}
+ ${eyebrow(160,150,'Empresa cotitular 02',PS(4)-0.1,'#fff')}
+ ${box(160,195,1000,T('h1','Sorito Albir','words',W(4,'sorito')-0.1,'font-size:76px;color:#fff'))}
+ ${box(160,285,1000,T('h3','Taiga Benidorm','up',W(4,'taiga',1)-0.2,'color:#394251'))}
+ <div class="abs col" style="left:160px;top:390px;gap:18px;align-items:flex-start">
+  ${chip('tent','Antes Camping La Media Legua',W(4,'antiguo')-0.2)}
+  ${chip('calendar','Gestión de Taiga desde febrero de 2026',W(4,'febrero')-0.2)}
+ </div>
+ <div class="abs" style="left:1000px;top:200px;width:760px;height:690px;background:#fff;border-radius:8px;padding:50px 60px" ${A('up',W(4,'seis')-0.5,0.6)}>
+  ${T('eyebrow','Facturación de Sorito Albir','fade',W(4,'seis')-0.3,'color:#8492A8')}
+  ${[['Todo 2025','1,44',1.44,W(4,'seis')-0.2],['1.er semestre 2026','1,56',1.56,W(4,'superado')-0.3]].map(([lab,val,v,at],i)=>{const w=Math.round(v/1.6*480);return `<div style="margin-top:${i?40:36}px">${T('lbl',lab,'fade',at,'color:#5D6879;font-size:26px')}
+   <div class="row" style="gap:24px;margin-top:12px"><div style="width:${w}px;height:70px;background:${i?'#394251':'#ADB9CC'};transform-origin:left" ${A('grow',at,0.7)}></div>${T('h-xl',val+NB+'M€','up',at+0.4,'font-size:56px;color:#394251;white-space:nowrap')}</div></div>`}).join('')}
+  <div style="height:2px;background:#D6DCE6;margin:40px 0 30px" ${A('grow',W(4,'superado')+0.3,0.6)}></div>
+  ${T('h3','En seis meses supera todo 2025','up',W(4,'facturación')-0.1,'color:#394251')}
  </div>
 `);
 
-// 6 · La operación — light (cambio de fondo claro)
-const opCard=(x,y,icon,at,label,value,sub='')=>`<div class="abs card" style="left:${x}px;top:${y}px;width:500px;height:230px;padding:34px 40px" ${A('up',at-0.2,0.6)}>
-  <div class="row" style="gap:18px"><div style="width:52px;height:52px;color:var(--slate)">${ico(icon,at,52)}</div>${T('eyebrow',label,'fade',at)}</div>
-  ${T('h-xl',value,'up',at+0.1,'font-size:76px;margin-top:22px;color:var(--slate)')}${sub?T('body soft',sub,'up',at+0.3,'font-size:24px;margin-top:6px'):''}</div>`;
+// 5 · La operación — blanco
 scene(PS(5)-0.35,'light',`
- ${eyebrow(160,160,'La operación · Flamingo',PS(5)-0.1)}
- ${box(160,215,900,T('lbl soft','Préstamo de','up',W(5,'préstamo')-0.2))}
- ${box(150,262,1100,T('h-xl',cnt(0,300000,W(5,'trescientos')-0.1,0.9)+NB+'€','up',W(5,'trescientos')-0.2,'font-size:180px;color:var(--slate)'))}
- <div class="abs row" style="left:160px;top:470px;gap:40px">
-  <div class="row" style="gap:16px" ${A('up',W(5,'seis')-0.1)}>${ico('calendar',W(5,'seis'),50,'color:var(--acc)')}<span class="h3">6 meses</span></div>
-  <div class="row" style="gap:16px" ${A('up',W(5,'proveedores')-0.4)}>${ico('docCheck',W(5,'proveedores')-0.3,50,'color:var(--acc)')}<span class="h3">Pago a proveedores</span></div>
+ ${eyebrow(160,150,'La operación',PS(5)-0.1)}
+ ${box(160,200,900,T('lbl','Préstamo de','up',W(5,'préstamo')-0.2,'color:#5D6879'))}
+ ${box(150,245,1100,T('h-xl',cnt(0,300000,W(5,'300000')-0.1,0.9)+NB+'€','up',W(5,'300000')-0.2,'font-size:170px;color:#394251'))}
+ <div class="abs row" style="left:160px;top:470px;gap:20px">${chip('calendar','6 meses',W(5,'seis')-0.2)}${chip('docCheck','Circulante · pago a proveedores',W(5,'proveedores')-0.4)}</div>
+ <div class="abs" style="left:160px;top:610px;width:760px;height:250px;border-radius:8px;background:#8492A8;padding:40px 46px" ${A('up',W(5,'firman')-0.3,0.6)}>
+  ${T('eyebrow','Cotitularidad','fade',W(5,'firman')-0.2,'color:#fff')}
+  <div class="row" style="gap:26px;margin-top:22px">${disc('building',W(5,'firman')-0.1,96)}${disc('tent',W(5,'firman')+0.1,96)}${T('h3','Firman las dos sociedades','up',W(5,'firman'),'color:#fff')}</div>
  </div>
- ${opCard(160,600,'percent',W(5,'nominal')-0.1,'TIN','8,5'+NB+'%')}
- ${opCard(700,600,'growth',W(5,'tir')-0.1,'TIR inversor','10,88'+NB+'%','Estimada')}
+ <div class="abs" style="left:980px;top:610px;width:780px;height:250px;border-radius:8px;background:#F4F6F9;padding:40px 46px" ${A('up',W(5,'flujo')-0.3,0.6)}>
+  <div class="row" style="gap:26px">${disc('drop',W(5,'flujo')-0.1,96)}${T('h3','Devolución con el flujo de caja operativo de ambas sociedades','up',W(5,'flujo'),'color:#394251;font-size:38px')}</div>
+ </div>
 `);
 
-// 7 · Garantía — dark
+// 5b · Análisis previo — azul pizarra: dos pasos que terminan en «Aprobada»
+const stepBox=(x,icon,title,at)=>`<div class="abs col" style="left:${x}px;top:360px;width:420px">${disc(icon,at-0.1,170)}${T('h3',title,'up',at+0.1,'margin-top:30px;color:#fff')}</div>`;
 scene(PS(6)-0.35,'dark',`
- ${eyebrow(160,160,'Garantía',PS(6)-0.1)}
- <div class="abs" style="left:160px;top:240px;width:760px;height:560px;background:var(--slate7);border-radius:6px;padding:60px" ${A('up',W(6,'aval')-0.3,0.6)}>
-  <div class="row" style="gap:20px">${disc('building',W(6,'aval')-0.1,140)}${disc('tent',W(6,'ambas')-0.1,140)}</div>
-  ${T('h1','Aval de <span class="hl">ambas sociedades</span>','words',W(6,'aval'),'margin-top:56px;font-size:72px')}
- </div>
- <div class="abs" style="left:1000px;top:240px;width:760px;height:560px;background:var(--slate7);border-radius:6px;padding:60px" ${A('up',W(6,'vencimiento')-0.3,0.6)}>
-  <div style="width:140px;height:140px;color:var(--acc5)">${ico('calendar',W(6,'vencimiento')-0.1,140)}</div>
-  ${T('h3','El vencimiento coincide con el cobro de un <span class="hl">préstamo ICO</span> ya preconcedido','words',W(6,'vencimiento'),'margin-top:56px;color:#fff;font-size:44px;line-height:1.25')}
- </div>
+ ${eyebrow(160,150,'Antes de ofrecerla',PS(6)-0.1,'#ADB9CC')}
+ ${stepBox(160,'docSearch','Análisis de riesgos',W(6,'análisis')-0.2)}
+ <div class="abs" style="left:600px;top:444px;width:300px;height:2px;background:#8492A8;transform-origin:left" ${A('grow',W(6,'comité')-0.6,0.5)}></div>
+ ${stepBox(760,'people','Comité de inversión',W(6,'comité')-0.2)}
+ <div class="abs" style="left:1200px;top:444px;width:220px;height:2px;background:#8492A8;transform-origin:left" ${A('grow',W(6,'validado')-0.6,0.5)}></div>
+ <div class="abs row" style="left:1420px;top:385px;gap:20px;padding:24px 40px 24px 28px;border-radius:12px;background:#8492A8" ${A('pop',W(6,'validado')-0.1,0.5)}>${ico('check',W(6,'validado'),64,'color:#fff')}<span class="h2" style="color:#fff">Aprobada</span></div>
+ ${box(160,690,1600,T('body','Capacidad de repago de ambas sociedades validada','words',W(6,'capacidad')-0.2,'color:#ADB9CC;text-align:center;font-size:32px'))}
 `);
 
-// 8 · Capacidad de deuda — accent
-scene(PS(7)-0.35,'accent',`
- ${eyebrow(160,170,'Capacidad de deuda',PS(7)-0.1)}
- <div class="abs row" style="left:150px;top:270px;gap:50px">
-  ${T('h-xl','6'+NB+'%','pop',W(7,'seis')-0.2,'font-size:260px;color:#fff')}
-  <div>${T('h2','del importe','up',W(7,'importe')+0.2,'color:#fff')}${T('body','sobre la capacidad de deuda<br>estimada de <b>Flamingo Albir</b>','words',W(7,'capacidad')-0.2,'color:var(--slate7);margin-top:10px')}</div>
- </div>
- <div class="abs" style="left:160px;top:640px;width:900px;height:150px;background:#fff;border-radius:6px;padding:0 50px;display:flex;align-items:center;gap:40px" ${A('up',W(7,'financiera')-0.4,0.6)}>
-  ${T('eyebrow','Deuda financiera neta / EBITDA','fade',W(7,'financiera')-0.2)}${T('h-xl','1,3x','pop',W(7,'uno')-0.1,'font-size:84px;color:var(--slate)')}
- </div>
-`);
-
-// 9 · Riesgos y mitigantes — light
-const RISKS=[['building','Concentración de la deuda bancaria','concentración','Vencimientos escalonados a largo plazo','vencimientos'],
- ['sun','Exposición al ciclo turístico','exposición','Ingresos recurrentes','ingresos'],
- ['house','Patrimonio invertido sobre todo en inmuebles','patrimonio','Activos tangibles que respaldan el aval','activos']];
-function riskCol(i){const [icon,t,rw,m,mw]=RISKS[i];const x=160+i*540,ra=W(8,rw)-0.2,ma=W(9,mw)-0.2;
- return `<div class="abs" style="left:${x}px;top:230px;width:500px;height:300px;padding:34px 36px;background:#fff;box-shadow:inset 0 0 0 2px var(--acc3);border-radius:6px" ${A('up',ra,0.6)}>
-   <div class="row" style="gap:22px">${disc(icon,ra+0.1,96)}<div class="eyebrow" style="font-size:20px">Riesgo</div></div>
-   ${T('h3',t,'up',ra+0.2,'margin-top:26px;font-size:36px')}</div>
-  <div class="abs" style="left:${x+234}px;top:548px;width:32px;height:58px;color:var(--acc)" ${A('fade',ma-0.1,0.3)}><svg class="ic" viewBox="0 0 32 58" style="stroke-width:3"><path d="M16 2v50M5 41l11 12 11-12"/></svg></div>
-  <div class="abs" style="left:${x}px;top:620px;width:500px;height:240px;padding:34px 36px;background:var(--slate);border-radius:6px" ${A('up',ma,0.6)}>
-   <div class="eyebrow" style="font-size:20px;color:var(--acc5)">Mitigante</div>
-   ${T('h3',m,'up',ma+0.15,'margin-top:20px;font-size:34px;color:#fff')}</div>`}
-scene(PS(8)-0.35,'light',`
- ${eyebrow(160,160,'Riesgos y mitigantes',PS(8)-0.1)}
+// 6 · Riesgos y mitigantes — tres columnas
+const RISKS=[['building','Concentración bancaria','concentración','Vencimientos a largo plazo y escalonados','vencimientos'],
+ ['sun','Estacionalidad del turismo','estacionalidad','Patrón de ventas recurrente','patrón'],
+ ['coin','Endeudamiento de Sorito Albir','endeudamiento','Renta que Taiga paga por gestionar el camping','renta']];
+function riskCol(i){const [icon,t,rw,m,mw]=RISKS[i];const x=160+i*540,ra=W(7,rw)-0.2,ma=W(8,mw)-0.2;
+ return `<div class="abs" style="left:${x}px;top:220px;width:500px;height:280px;padding:32px 36px;background:#fff;box-shadow:inset 0 0 0 2px #D6DCE6;border-radius:8px" ${A('up',ra,0.6)}>
+   <div class="row" style="gap:22px">${disc(icon,ra+0.1,90)}<div class="eyebrow" style="font-size:20px;color:#8492A8">Riesgo</div></div>
+   ${T('h3',t,'up',ra+0.2,'margin-top:24px;font-size:36px;color:#394251')}</div>
+  <div class="abs" style="left:${x+234}px;top:518px;width:32px;height:58px;color:#8492A8" ${A('fade',ma-0.1,0.3)}><svg class="ic" viewBox="0 0 32 58" style="stroke-width:3"><path d="M16 2v50M5 41l11 12 11-12"/></svg></div>
+  <div class="abs" style="left:${x}px;top:590px;width:500px;height:270px;padding:32px 36px;background:#394251;border-radius:8px" ${A('up',ma,0.6)}>
+   <div class="row" style="gap:18px"><div style="width:56px;height:56px;color:#ADB9CC">${ico('shCheck',ma+0.1,56)}</div><div class="eyebrow" style="font-size:20px;color:#ADB9CC">Mitigante</div></div>
+   ${T('h3',m,'up',ma+0.15,'margin-top:18px;font-size:34px;color:#fff')}</div>`}
+scene(PS(7)-0.35,'light',`
+ ${eyebrow(160,150,'Riesgos y mitigantes',PS(7)-0.1)}
  ${riskCol(0)}${riskCol(1)}${riskCol(2)}
 `);
 
-// 10 · Cómo participar — dark
-const part=(x,icon,at,label,val)=>`<div class="abs" style="left:${x}px;top:340px;width:760px;height:340px;background:var(--slate7);border-radius:6px;padding:56px 60px" ${A('up',at-0.2,0.6)}>
-  <div class="row" style="gap:24px"><div style="width:64px;height:64px;color:var(--acc5)">${ico(icon,at,64)}</div>${T('eyebrow',label,'fade',at)}</div>${T('h-xl',val,'up',at+0.1,'font-size:110px;margin-top:40px;color:#fff;white-space:nowrap')}</div>`;
-scene(PS(10)-0.35,'dark',`
- ${eyebrow(160,170,'Cómo participar',PS(10)-0.1)}
- ${part(160,'coin',W(10,'inversión')-0.1,'Inversión mínima',cnt(0,10000,W(10,'diez')-0.1,0.7)+NB+'€')}
- ${part(1000,'calendar',W(10,'plazo')-0.1,'Plazo para participar','Hasta el 13/11')}
+// 7a · Cifras para el inversor — azul pizarra
+scene(PS(9)-0.35,'dark',`
+ ${box(0,380,1920,T('h-xl','Hablemos de <span style="color:#ADB9CC">cifras</span><br>para el inversor','words',PS(9),'font-size:110px;color:#fff;text-align:center;line-height:1.05'))}
 `);
 
-// 11 · Cierre — light (plano final de la rama financiera)
-const END=PE(11)+0.4;
-const pill=(icon,txt,at)=>`<div class="row pill" style="gap:16px;color:var(--slate);border-color:var(--acc3)" ${A('up',at)}>${ico(icon,at+0.05,40)}<span class="lbl" style="font-size:32px;color:var(--slate)">${txt}</span></div>`;
-scene(PS(11)-0.35,'light',`
- <div class="abs" style="left:610px;top:300px;width:700px" ${A('wipe',PS(11)-0.1,0.9)}>${LOGO}</div>
- ${box(0,485,1920,T('h2','Financiación privada <b>para empresas</b>','words',PS(11)+0.5,'text-align:center'))}
- ${box(0,600,1920,T('eyebrow','Relación con Inversores','fade',W(11,'relación')-0.1,'text-align:center'))}
- <div class="abs row" style="left:0;width:1920px;top:650px;justify-content:center;gap:28px">
-   ${pill('globe','www.vhfs.es',W(11,'inversores')-0.1)}${pill('phone','914 516 306',W(11,'inversores')+0.15)}${pill('mail','inversores@vanniloholding.com',W(11,'inversores')+0.4)}
- </div>
- <div class="abs" style="left:460px;top:868px;width:1000px;height:1px;background:var(--acc3);transform-origin:center" ${A('grow',END,0.8)}></div>
- <div class="abs row" style="left:0;width:1920px;top:886px;justify-content:center;gap:22px" ${A('fade',END+0.4,0.6)}>
-   <img src="${GOB}" style="height:40px;width:auto;display:block">
-   <div class="body" style="font-size:14px;line-height:1.5;color:var(--acc9);text-align:left;max-width:600px">Vannilo 4 Inversiones es una entidad supervisada y registrada por el Banco de España con Nº de Registro D517.<br>Nº 1015/2022 de la sección segunda.</div>
- </div>
- ${box(0,962,1920,T('body','VHFS no es entidad de crédito y no capta depósitos del público.','fade',END+0.6,'font-size:14px;color:var(--acc9);text-align:center'))}
+// 7b · Rentabilidad y calendario de pagos — blanco
+const rate=(y,label,val,at,note='')=>`<div class="abs" style="left:160px;top:${y}px;width:640px;height:${note?250:200}px;border-radius:8px;background:#F4F6F9;padding:30px 40px" ${A('up',at-0.2,0.6)}>${T('eyebrow',label,'fade',at,'color:#8492A8')}${T('h-xl',val,'up',at+0.05,'font-size:96px;margin-top:10px;color:#394251')}${note?T('lbl',note,'up',W(10,'garantizada')-0.3,'font-size:26px;color:#5D6879;margin-top:6px'):''}</div>`;
+// barras apiladas: capital + intereses (+ bonus en el mes 6)
+const PAYS=[{m:'Mes 3',tot:156375,seg:[['Capital',150000,'#8492A8'],['Intereses',6375,'#394251']],at:W(11,'tercer')-0.2},
+ {m:'Mes 6',tot:155438,seg:[['Capital',150000,'#8492A8'],['Intereses',3188,'#394251'],['Bonus a éxito',2250,'#ADB9CC']],at:W(11,'sexto')-0.2}];
+function stack(){const base=820,k=380/160000,bw=170;return PAYS.map((p,i)=>{const x=960+i*420;let y=base,h='';
+  p.seg.forEach(([lab,v,c],j)=>{const hh=Math.max(14,Math.round(v*k));y-=hh;const at=j==2?W(11,'bonus')-0.2:p.at+j*0.3;
+   h+=`<div class="abs" style="left:${x}px;top:${y}px;width:${bw}px;height:${hh}px;background:${c};transform-origin:bottom" ${A('growY',at,0.6)}></div>`;});
+  h+=`<div class="abs" style="left:${x-30}px;top:${y-60}px;width:${bw+60}px;text-align:center" ${A('up',p.at+0.5)}><span class="lbl" style="font-weight:700;color:#394251;font-size:30px;white-space:nowrap">${fmt(p.tot)}${NB}€</span></div>`;
+  h+=`<div class="abs lbl" style="left:${x}px;top:${base+14}px;width:${bw}px;text-align:center;color:#5D6879;font-size:26px" ${A('fade',p.at,0.4)}>${p.m}</div>`;
+  h+=`<div class="abs" style="left:${x+bw+18}px;top:${y}px;width:200px" ${A('fade',p.at+0.6,0.5)}>${p.seg.slice().reverse().map(([lab,v,c])=>`<div class="row" style="gap:10px;margin-bottom:8px"><div style="width:12px;height:12px;background:${c};flex:none"></div><span class="body" style="font-size:20px;color:#101010;white-space:nowrap">${lab} ${fmt(v)}${NB}€</span></div>`).join('')}</div>`;
+  return h}).join('')}
+scene(PS(10)-0.35,'light',`
+ ${eyebrow(160,150,'Cifras para el inversor',PS(10)-0.1)}
+ ${rate(220,'TIN','8,5'+NB+'%',W(10,'interés')-0.1)}
+ ${rate(460,'TIR inversor','10,88'+NB+'%',W(10,'rentabilidad')-0.1,'Rentabilidad estimada, no garantizada')}
+ ${box(960,150,800,T('eyebrow','Calendario de pagos','fade',W(11,'capital')-0.2,'color:#8492A8'))}
+ <div class="abs" style="left:950px;top:820px;width:800px;height:2px;background:#D6DCE6;transform-origin:left" ${A('grow',W(11,'capital')-0.2,0.6)}></div>
+ ${stack()}
+ <div class="abs" style="left:160px;top:760px;width:640px;height:110px;border-radius:8px;background:#394251;padding:0 40px;display:flex;align-items:center" ${A('up',W(11,'apertura')-0.2,0.6)}><span class="lbl" style="color:#fff;font-size:30px;white-space:nowrap">Beneficio total: <b style="color:#fff">${fmt(11813)}${NB}€</b> sobre ${fmt(300000)}${NB}€</span></div>
+`);
+
+// 8 · Cómo participar — azul pizarra
+const part=(x,icon,at,label,val)=>`<div class="abs" style="left:${x}px;top:300px;width:760px;height:320px;background:#2A313C;border-radius:8px;padding:50px 60px" ${A('up',at-0.2,0.6)}>
+  <div class="row" style="gap:24px"><div style="width:60px;height:60px;color:#ADB9CC">${ico(icon,at,60)}</div>${T('eyebrow',label,'fade',at,'color:#ADB9CC')}</div>${T('h-xl',val,'up',at+0.1,'font-size:110px;margin-top:36px;color:#fff;white-space:nowrap')}</div>`;
+scene(PS(12)-0.35,'dark',`
+ ${eyebrow(160,170,'Cómo participar',PS(12)-0.1,'#ADB9CC')}
+ ${part(160,'coin',W(12,'inversión')-0.1,'Ticket mínimo',cnt(0,10000,W(12,'10000')-0.1,0.7)+NB+'€')}
+ ${part(1000,'calendar',W(12,'plazo')-0.1,'Fecha límite','25/11/2026')}
+ <div class="abs row" style="left:160px;top:690px;gap:24px" ${A('up',W(12,'relación')-0.2)}>${disc('people',W(12,'relación')-0.1,100)}<span class="h3" style="color:#fff">Equipo de Relación con Inversores</span></div>
+`);
+
+// 9 · Cierre — blanco, logo grande, contacto de inversores y aviso legal
+const END=PE(13)+0.3;
+const pill=(icon,txt,at)=>`<div class="row pill" style="gap:16px;color:#394251;border-color:#D6DCE6" ${A('up',at)}>${ico(icon,at+0.05,40)}<span class="lbl" style="font-size:32px;color:#394251">${txt}</span></div>`;
+scene(PS(13)-0.35,'light',`
+ <div class="abs" style="left:585px;top:170px;width:750px" ${A('wipe',PS(13)-0.1,0.9)}>${LOGO}</div>
+ ${box(0,365,1920,T('h2','Financiación privada <b>para empresas</b>','words',W(13,'financiación')-0.1,'text-align:center'))}
+ <div class="abs row" style="left:0;width:1920px;top:500px;justify-content:center;gap:28px">${pill('mail','inversores@vanniloholding.com',W(13,'financiación')+0.4)}${pill('phone','(+34) 911 632 094',W(13,'financiación')+0.7)}</div>
+ <div class="abs" style="left:360px;top:650px;width:1200px;height:1px;background:#D6DCE6;transform-origin:center" ${A('grow',END-0.6,0.8)}></div>
+ ${box(310,680,1300,T('body','Documento informativo dirigido a los socios e inversores de Vannilo Holding, de carácter confidencial. No constituye una oferta pública ni asesoramiento financiero. Las rentabilidades indicadas son estimaciones netas, ya descontadas las comisiones aplicables, sin incluir las retenciones fiscales del inversor, y no están garantizadas. Toda inversión conlleva riesgo, incluida la posible pérdida total o parcial del capital.','fade',END-0.4,'font-size:24px;line-height:1.6;color:#8492A8;text-align:center'))}
 `,{noCorner:true,noSubsAfter:END});
