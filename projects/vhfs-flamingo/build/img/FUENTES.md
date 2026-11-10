@@ -12,4 +12,18 @@ Pendiente: VHFS debe confirmar con Flamingo Albir y con TAIGA el permiso de uso 
 | albir_toboganes.jpg | https://static-resources-elementor.mirai.com/wp-content/uploads/sites/2010/galeria-zonas10.webp (web oficial, galería) |
 | albir_edificios.jpg | https://static-resources-elementor.mirai.com/wp-content/uploads/sites/2010/IMG-1-5-1.webp (web oficial) |
 | albir_lobby.jpg | https://static-resources-elementor.mirai.com/wp-content/uploads/sites/2010/galeria-hotel01.webp (web oficial, galería) |
-| Taiga Benidorm | Pendiente: taigaresorts.com bloquea la descarga automática; el cliente debe facilitar las fotos |
+
+
+## Fotos en uso desde la v6 (documento «Flamingo · Fotos del vídeo»)
+
+| Archivo | Origen |
+|---|---|
+| 01_albir-garden_vista-aerea.jpg | Informe, adjuntada por el cliente |
+| 05_albir-garden_vista-general.jpg | https://static-resources-elementor.mirai.com/wp-content/uploads/sites/2010/IMG-1-5-1.webp |
+| 06_albir-garden_piscina-palmeras.jpg | https://static-resources-elementor.mirai.com/wp-content/uploads/sites/2010/home-instagram-img02.webp |
+| 07_albir-garden_aquagarden-toboganes.jpg | https://static-resources-elementor.mirai.com/wp-content/uploads/sites/2010/home-instagram-img01.webp |
+| 09_taiga-benidorm_piscina-principal.jpg | https://cdn2.paraty.es/q10-corpo/images/534c6e6e0eb0101=s1900 |
+| 10_taiga-benidorm_piscina-palmeras.jpg | https://cdn2.paraty.es/q10-corpo/images/5d60f47f3a65e7f=s1900 |
+| 13_taiga-benidorm_parcelas-caravanas.jpg | https://cdn2.paraty.es/taiga-benidorm/images/a1a68e6fd6f1782=s1900 |
+
+Las fotos anteriores (albir_*.jpg) ya no se usan en el vídeo.

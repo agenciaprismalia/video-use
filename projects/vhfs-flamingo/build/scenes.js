@@ -10,7 +10,8 @@ const NB=' ';
 // rótulo de sección: versalitas espaciadas en #8492A8
 const eyebrow=(x,y,txt,at,color='#8492A8')=>box(x,y,1300,T('eyebrow',txt,'left',at,`color:${color}`));
 const chip=(icon,txt,at,style='')=>`<div class="row" style="background:#F4F6F9;border-radius:8px;padding:20px 32px 20px 22px;gap:20px;${style}" ${A('up',at)}>${ico(icon,at+0.1,52,'color:#394251')}<div class="lbl" style="color:#394251;font-size:30px">${txt}</div></div>`;
-const photo=(src,at,pos='center')=>`<img src="img/${src}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${pos};transform-origin:center" ${A('kb',at,8)}>`;
+const photo=(src,at,pos='center',k=1.12)=>`<img src="img/${src}" data-k="${k}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${pos};transform-origin:center" ${A('kb',at,8)}>`;
+const tag=(txt,at)=>`<div class="abs" style="left:16px;bottom:16px;background:#394251;border-radius:6px;padding:8px 16px" ${A('fade',at,0.5)}><span class="lbl" style="color:#fff;font-size:22px">${txt}</span></div>`;
 const frame=(x,y,w,h,at,inner)=>`<div class="abs" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:8px;overflow:hidden;background:#F4F6F9;box-shadow:0 0 0 1px #D6DCE6" ${A('wipe',at,0.9)}>${inner}</div>`;
 
 // 1a · Apertura — azul pizarra: trayectoria de VHFS
@@ -23,35 +24,34 @@ scene(0,'dark',`
  ${box(0,720,1920,T('body','Cifras a cierre de octubre de 2026','fade',W(0,'financiados'),'text-align:center;font-size:26px;color:var(--acc5)'))}
 `,{noCorner:true});
 
-// 1b · Apertura — blanco: Vannilo Holding Financial Services presenta Flamingo
+// 1b · Apertura — blanco (sin fotos): Vannilo Holding Financial Services presenta Flamingo
 scene(W(0,'vannilo')-0.4,'light',`
- <div class="abs" style="left:160px;top:150px;width:560px" ${A('wipe',W(0,'vannilo')-0.2,0.9)}>${LOGO}</div>
- ${box(160,300,800,T('lbl','Vannilo Holding Financial Services presenta','words',W(0,'vannilo')+0.2,'color:#101010;font-weight:400'))}
- <div class="abs" style="left:160px;top:370px"><div class="pill eyebrow" style="border-color:#D6DCE6;padding:12px 28px;letter-spacing:.28em;color:#8492A8" ${A('up',W(0,'oportunidad')-0.2)}>Oportunidad de inversión</div></div>
- <div class="abs row" style="left:160px;top:460px;gap:20px">${chip('office','Hotelero',W(0,'hotelero')-0.2)}${chip('sun','Costa Blanca',W(0,'costa')-0.2)}</div>
- ${box(150,580,900,T('h-xl','Flamingo','up',W(0,'flamingo')-0.15,'font-size:190px;color:#394251'))}
- ${frame(1080,150,680,760,W(0,'sector')-0.3,photo('albir_piscinas.jpg',W(0,'sector')-0.3))}
+ <div class="abs" style="left:660px;top:150px;width:600px" ${A('wipe',W(0,'vannilo')-0.2,0.9)}>${LOGO}</div>
+ ${box(0,305,1920,T('lbl','Vannilo Holding Financial Services presenta','words',W(0,'vannilo')+0.2,'color:#101010;font-weight:400;text-align:center'))}
+ <div class="abs row" style="left:0;width:1920px;top:375px;justify-content:center"><div class="pill eyebrow" style="border-color:#D6DCE6;padding:12px 28px;letter-spacing:.28em;color:#8492A8" ${A('up',W(0,'oportunidad')-0.2)}>Oportunidad de inversión</div></div>
+ <div class="abs row" style="left:0;width:1920px;top:465px;justify-content:center;gap:20px">${chip('office','Hotelero',W(0,'hotelero')-0.2)}${chip('sun','Costa Blanca',W(0,'costa')-0.2)}</div>
+ ${box(0,590,1920,T('h-xl','Flamingo','up',W(0,'flamingo')-0.15,'font-size:200px;color:#394251;text-align:center'))}
 `,{noCorner:true});
 
-// 2 · Estructura del grupo — organigrama
-const node=(x,y,w,title,sub,at,on)=>`<div class="abs" style="left:${x}px;top:${y}px;width:${w}px;height:150px;border-radius:8px;padding:26px 24px;background:${on?'#8492A8':'#F4F6F9'};text-align:center" ${A(on?'pop':'up',at,on?0.5:0.6)}>
-  <div class="h3" style="font-size:34px;color:${on?'#fff':'#ADB9CC'}">${title}</div><div class="body" style="font-size:22px;margin-top:6px;color:${on?'#fff':'#ADB9CC'}">${sub}</div></div>`;
-const NX=[160,580,1000,1340],NW=[400,400,320,420],NY=600;
+// 2 · Estructura del grupo — organigrama; miniaturas 01 y 09 en las tarjetas cotitulares
+const node=(x,y,w,h,title,sub,at,on,img='')=>`<div class="abs" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:8px;overflow:hidden;background:${on?'#8492A8':'#F4F6F9'};text-align:center" ${A(on?'pop':'up',at,on?0.5:0.6)}>
+  ${img?`<div style="position:relative;height:170px;overflow:hidden">${photo(img,at,'center',1.08)}</div>`:''}
+  <div style="padding:${img||h>200?'26px':'26px'} 22px"><div class="h3" style="font-size:34px;color:${on?'#fff':'#ADB9CC'}">${title}</div><div class="body" style="font-size:22px;margin-top:6px;color:${on?'#fff':'#ADB9CC'}">${sub}</div></div></div>`;
+const NX=[160,580,1000,1340],NW=[400,400,320,420],NY=470;
 scene(PS(1)-0.35,'light',`
  ${eyebrow(160,150,'Estructura del grupo',PS(1)-0.1)}
- <div class="abs" style="left:760px;top:230px;width:400px;height:120px;border-radius:8px;background:#394251;display:flex;align-items:center;justify-content:center" ${A('pop',W(1,'grupo')-0.1,0.5)}><span class="h3" style="color:#fff">Grupo Sun Confort</span></div>
- <div class="abs" style="left:959px;top:350px;width:2px;height:90px;background:#D6DCE6;transform-origin:top" ${A('growY',W(1,'reúne')-0.3,0.4)}></div>
- <div class="abs" style="left:360px;top:440px;width:1140px;height:2px;background:#D6DCE6;transform-origin:center" ${A('grow',W(1,'reúne')-0.1,0.6)}></div>
- ${NX.map((x,i)=>`<div class="abs" style="left:${x+NW[i]/2-1}px;top:440px;width:2px;height:${NY-440}px;background:#D6DCE6;transform-origin:top" ${A('growY',W(1,'reúne')+0.3,0.4)}></div>`).join('')}
- ${node(NX[0],NY,NW[0],'Flamingo Albir','Albir Garden Resort',W(1,'reúne')+0.5,false)}
- ${node(NX[1],NY,NW[1],'Sorito Albir','Camping La Media Legua · Taiga Benidorm',W(1,'reúne')+0.6,false)}
- ${node(NX[2],NY,NW[2],'Sant Chaume','Hotel Agua Azul',W(1,'hoteles')-0.1,false)}
- ${node(NX[3],NY,NW[3],'Roseroba','Apartamentos San Jaime',W(1,'apartamentos')-0.1,false)}
- ${node(NX[0],NY,NW[0],'Flamingo Albir','Albir Garden Resort',W(1,'flamingo')-0.1,true)}
- ${node(NX[1],NY,NW[1],'Sorito Albir','Camping La Media Legua · Taiga Benidorm',W(1,'sorito')-0.1,true)}
- <div class="abs" style="left:160px;top:790px;width:820px;height:2px;background:#8492A8;transform-origin:left" ${A('grow',W(1,'sorito')+0.4,0.6)}></div>
- ${box(160,810,820,T('eyebrow','Empresas cotitulares del préstamo','fade',W(1,'sorito')+0.6,'color:#8492A8;text-align:center'))}
- ${frame(1340,150,420,280,W(1,'albir',1)-0.2,photo('albir_aerea.jpg',W(1,'albir',1)-0.2))}
+ <div class="abs" style="left:760px;top:190px;width:400px;height:110px;border-radius:8px;background:#394251;display:flex;align-items:center;justify-content:center" ${A('pop',W(1,'grupo')-0.1,0.5)}><span class="h3" style="color:#fff">Grupo Sun Confort</span></div>
+ <div class="abs" style="left:959px;top:300px;width:2px;height:90px;background:#D6DCE6;transform-origin:top" ${A('growY',W(1,'reúne')-0.3,0.4)}></div>
+ <div class="abs" style="left:360px;top:390px;width:1140px;height:2px;background:#D6DCE6;transform-origin:center" ${A('grow',W(1,'reúne')-0.1,0.6)}></div>
+ ${NX.map((x,i)=>`<div class="abs" style="left:${x+NW[i]/2-1}px;top:390px;width:2px;height:${NY-390}px;background:#D6DCE6;transform-origin:top" ${A('growY',W(1,'reúne')+0.3,0.4)}></div>`).join('')}
+ ${node(NX[0],NY,NW[0],310,'Flamingo Albir','Albir Garden Resort',W(1,'reúne')+0.5,false)}
+ ${node(NX[1],NY,NW[1],310,'Sorito Albir','Camping La Media Legua · Taiga Benidorm',W(1,'reúne')+0.6,false)}
+ ${node(NX[2],NY,NW[2],150,'Sant Chaume','Hotel Agua Azul',W(1,'hoteles')-0.1,false)}
+ ${node(NX[3],NY,NW[3],150,'Roseroba','Apartamentos San Jaime',W(1,'apartamentos')-0.1,false)}
+ ${node(NX[0],NY,NW[0],310,'Flamingo Albir','Albir Garden Resort',W(1,'flamingo')-0.1,true,'01_albir-garden_vista-aerea.jpg')}
+ ${node(NX[1],NY,NW[1],310,'Sorito Albir','Taiga Benidorm',W(1,'sorito')-0.1,true,'09_taiga-benidorm_piscina-principal.jpg')}
+ <div class="abs" style="left:160px;top:810px;width:820px;height:2px;background:#8492A8;transform-origin:left" ${A('grow',W(1,'sorito')+0.4,0.6)}></div>
+ ${box(160,830,820,T('eyebrow','Empresas cotitulares del préstamo','fade',W(1,'sorito')+0.6,'color:#8492A8;text-align:center'))}
 `);
 
 // 3 · Flamingo Albir — fotos y fichas
@@ -65,8 +65,9 @@ scene(PS(2)-0.35,'light',`
   ${chip('pool','Resort familiar con parque acuático',W(2,'familias')-0.2)}
   ${chip('globe','Turismo del norte de Europa',W(2,'norte')-0.3)}
  </div>
- ${frame(1000,150,760,780,PS(2)-0.2,
-   photo('albir_entrada.jpg',PS(2)-0.2,'center 40%')+photo('albir_edificios.jpg',W(2,'trayectoria')-0.2)+photo('albir_piscinas_vista.jpg',W(2,'complejo')-0.2)+photo('albir_parque_aereo.jpg',W(2,'parque')-0.3)+photo('albir_toboganes.jpg',W(2,'norte')-0.2))}
+ ${frame(1180,250,420,392,PS(2)-0.2,
+   photo('05_albir-garden_vista-general.jpg',PS(2)-0.2,'center 40%',1.06)+photo('06_albir-garden_piscina-palmeras.jpg',PS(2)+3.2,'center',1.06)+photo('07_albir-garden_aquagarden-toboganes.jpg',W(2,'parque')-0.3,'center',1.06))}
+ ${box(1180,664,420,T('eyebrow','Albir Garden Resort','fade',PS(2)+0.3,'color:#8492A8;text-align:center'))}
 `);
 
 // 3b · Flamingo Albir — facturación y EBITDA (azul pizarra)
@@ -99,6 +100,7 @@ scene(PS(4)-0.35,'accent',`
   ${chip('tent','Antes Camping La Media Legua',W(4,'antiguo')-0.2)}
   ${chip('calendar','Gestión de Taiga desde febrero de 2026',W(4,'febrero')-0.2)}
  </div>
+ ${frame(160,640,760,310,W(4,'antiguo')-0.4,photo('13_taiga-benidorm_parcelas-caravanas.jpg',W(4,'antiguo')-0.4,'center 60%',1.08)+photo('10_taiga-benidorm_piscina-palmeras.jpg',W(4,'gestiona')-0.2,'center',1.08)+tag('Taiga Benidorm',W(4,'antiguo')))}
  <div class="abs" style="left:1000px;top:200px;width:760px;height:690px;background:#fff;border-radius:8px;padding:50px 60px" ${A('up',W(4,'seis')-0.5,0.6)}>
   ${T('eyebrow','Facturación de Sorito Albir','fade',W(4,'seis')-0.3,'color:#8492A8')}
   ${[['Todo 2025','1,44',1.44,W(4,'seis')-0.2],['1.er semestre 2026','1,56',1.56,W(4,'superado')-0.3]].map(([lab,val,v,at],i)=>{const w=Math.round(v/1.6*480);return `<div style="margin-top:${i?40:36}px">${T('lbl',lab,'fade',at,'color:#5D6879;font-size:26px')}
@@ -113,6 +115,10 @@ scene(PS(5)-0.35,'light',`
  ${eyebrow(160,150,'La operación',PS(5)-0.1)}
  ${box(160,200,900,T('lbl','Préstamo de','up',W(5,'préstamo')-0.2,'color:#5D6879'))}
  ${box(150,245,1100,T('h-xl',cnt(0,300000,W(5,'300000')-0.1,0.9)+NB+'€','up',W(5,'300000')-0.2,'font-size:170px;color:#394251'))}
+ ${frame(1080,150,330,300,W(5,'firman')-0.3,photo('01_albir-garden_vista-aerea.jpg',W(5,'firman')-0.3,'center',1.06))}
+ ${frame(1430,150,330,300,W(5,'firman')-0.1,photo('09_taiga-benidorm_piscina-principal.jpg',W(5,'firman')-0.1,'center',1.06))}
+ ${box(1080,468,330,T('eyebrow','Flamingo Albir','fade',W(5,'firman'),'color:#8492A8;text-align:center')+T('lbl','Albir Garden Resort','fade',W(5,'firman')+0.1,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
+ ${box(1430,468,330,T('eyebrow','Sorito Albir','fade',W(5,'firman')+0.2,'color:#8492A8;text-align:center')+T('lbl','Taiga Benidorm','fade',W(5,'firman')+0.3,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
  <div class="abs row" style="left:160px;top:470px;gap:20px">${chip('calendar','6 meses',W(5,'seis')-0.2)}${chip('docCheck','Circulante · pago a proveedores',W(5,'proveedores')-0.4)}</div>
  <div class="abs" style="left:160px;top:610px;width:760px;height:250px;border-radius:8px;background:#8492A8;padding:40px 46px" ${A('up',W(5,'firman')-0.3,0.6)}>
   ${T('eyebrow','Cotitularidad','fade',W(5,'firman')-0.2,'color:#fff')}

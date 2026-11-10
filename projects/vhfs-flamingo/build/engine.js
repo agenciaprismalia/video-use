@@ -45,7 +45,7 @@ function render(t){
      case 'draw':{const dd=a.d||1;a.paths.forEach((pth,j)=>{const off=j*0.06;const xx=eio(clamp((t-a.at-off)/(dd*0.8)));pth.style.strokeDashoffset=(1-xx).toFixed(4);pth.style.opacity=xx>0?1:0});break}
      case 'grow':e.style.transform=`scaleX(${eio(x)})`;break;
      case 'growY':e.style.transform=`scaleY(${eio(x)})`;break;
-     case 'kb':{const xx=clamp((t-a.at)/(a.d||7));e.style.opacity=clamp((t-a.at)/0.7);e.style.transform=`scale(${(1.12-0.12*xx).toFixed(4)})`;break}
+     case 'kb':{const xx=clamp((t-a.at)/(a.d||7)),k0=+(e.dataset.k||1.12);e.style.opacity=clamp((t-a.at)/0.7);e.style.transform=`scale(${(k0-(k0-1)*xx).toFixed(4)})`;break}
      case 'wipe':e.style.clipPath=`inset(0 ${((1-eio(x))*100).toFixed(3)}% 0 0)`;e.style.opacity=x>0?1:0;break;
      case 'count':{const v=a.from+(a.to-a.from)*eo(x);e.textContent=a.raw?String(Math.round(v)):fmt(v);break}
      case 'words':{const st=0.075;a.w.forEach((w,j)=>{const xx=clamp((t-a.at-j*st)/0.45);const kk=eo(xx);w.style.opacity=clamp(xx*1.8);w.style.transform=`translateY(${(1-kk)*26}px)`});break}
