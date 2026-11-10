@@ -6,7 +6,7 @@ function ico(icon,at,size,style='',extra=''){return `<i class="icon" data-icon="
 const box=(x,y,w,inner,style='')=>`<div class="abs" style="left:${x}px;top:${y}px;${w?`width:${w}px;`:''}${style}">${inner}</div>`;
 const T=(cls,html,a,at,style='',extra='')=>`<div class="${cls}" style="${style}" ${A(a,at,null,extra)}>${html}</div>`;
 const cnt=(from,to,at,d=0.9,raw=false)=>`<span ${A('count',at,d,`data-from="${from}" data-to="${to}"${raw?' data-raw="1"':''}`)}>${raw?to:fmt(to)}</span>`;
-const NB=' ';
+const NB='<span style="display:inline-block;width:.24em"></span>'; // espacio antes de la unidad (visible también con interletrado negativo)
 // rótulo de sección: versalitas espaciadas en #8492A8
 const eyebrow=(x,y,txt,at,color='#8492A8')=>box(x,y,1300,T('eyebrow',txt,'left',at,`color:${color}`));
 const chip=(icon,txt,at,style='')=>`<div class="row" style="background:#F4F6F9;border-radius:8px;padding:20px 32px 20px 22px;gap:20px;${style}" ${A('up',at)}>${ico(icon,at+0.1,52,'color:#394251')}<div class="lbl" style="color:#394251;font-size:30px">${txt}</div></div>`;
@@ -17,9 +17,9 @@ const frame=(x,y,w,h,at,inner)=>`<div class="abs" style="left:${x}px;top:${y}px;
 // 1a · Apertura — azul pizarra: trayectoria de VHFS
 scene(0,'dark',`
  <div class="abs row" style="left:0;width:1920px;top:300px;justify-content:center;gap:180px">
-  <div class="col">${T('h-xl',cnt(0,120,W(0,'120')-0.2,1.2,true),'up',W(0,'120')-0.3,'font-size:200px;color:#fff')}${T('lbl','operaciones cerradas','up',W(0,'operaciones')-0.1,'color:var(--acc5);margin-top:10px')}</div>
+  <div class="col">${T('h-xl',cnt(0,120,W(0,'120')-0.2,1.2,true),'up',W(0,'120')-0.3,'font-size:200px;color:#fff')}${T('lbl','operaciones cerradas','up',W(0,'operaciones')-0.1,'color:var(--acc5);margin-top:34px')}</div>
   <div style="width:2px;height:300px;background:var(--acc9)" ${A('growY',W(0,'18')-0.5,0.5)}></div>
-  <div class="col">${T('h-xl','18,1'+NB+'M€','up',W(0,'18')-0.2,'font-size:200px;color:#fff;white-space:nowrap')}${T('lbl','financiados','up',W(0,'financiados')-0.2,'color:var(--acc5);margin-top:10px')}</div>
+  <div class="col">${T('h-xl','18,1'+NB+'M€','up',W(0,'18')-0.2,'font-size:200px;color:#fff;white-space:nowrap')}${T('lbl','financiados','up',W(0,'financiados')-0.2,'color:var(--acc5);margin-top:34px')}</div>
  </div>
  ${box(0,720,1920,T('body','Cifras a cierre de octubre de 2026','fade',W(0,'financiados'),'text-align:center;font-size:26px;color:var(--acc5)'))}
 `,{noCorner:true});
@@ -42,7 +42,7 @@ scene(PS(1)-0.35,'light',`
  ${eyebrow(160,150,'Estructura del grupo',PS(1)-0.1)}
  <div class="abs" style="left:760px;top:190px;width:400px;height:110px;border-radius:8px;background:#394251;display:flex;align-items:center;justify-content:center" ${A('pop',W(1,'grupo')-0.1,0.5)}><span class="h3" style="color:#fff">Grupo Sun Confort</span></div>
  <div class="abs" style="left:959px;top:300px;width:2px;height:90px;background:#D6DCE6;transform-origin:top" ${A('growY',W(1,'reúne')-0.3,0.4)}></div>
- <div class="abs" style="left:360px;top:390px;width:1140px;height:2px;background:#D6DCE6;transform-origin:center" ${A('grow',W(1,'reúne')-0.1,0.6)}></div>
+ <div class="abs" style="left:360px;top:390px;width:1190px;height:2px;background:#D6DCE6;transform-origin:center" ${A('grow',W(1,'reúne')-0.1,0.6)}></div>
  ${NX.map((x,i)=>`<div class="abs" style="left:${x+NW[i]/2-1}px;top:390px;width:2px;height:${NY-390}px;background:#D6DCE6;transform-origin:top" ${A('growY',W(1,'reúne')+0.3,0.4)}></div>`).join('')}
  ${node(NX[0],NY,NW[0],310,'Flamingo Albir','Albir Garden Resort',W(1,'reúne')+0.5,false)}
  ${node(NX[1],NY,NW[1],310,'Sorito Albir','Camping La Media Legua · Taiga Benidorm',W(1,'reúne')+0.6,false)}
@@ -65,15 +65,15 @@ scene(PS(2)-0.35,'light',`
   ${chip('pool','Resort familiar con parque acuático',W(2,'familias')-0.2)}
   ${chip('globe','Turismo del norte de Europa',W(2,'norte')-0.3)}
  </div>
- ${frame(1180,250,420,392,PS(2)-0.2,
-   photo('05_albir-garden_vista-general.jpg',PS(2)-0.2,'center 40%',1.06)+photo('06_albir-garden_piscina-palmeras.jpg',PS(2)+3.2,'center',1.06)+photo('07_albir-garden_aquagarden-toboganes.jpg',W(2,'parque')-0.3,'center',1.06))}
- ${box(1180,664,420,T('eyebrow','Albir Garden Resort','fade',PS(2)+0.3,'color:#8492A8;text-align:center'))}
+ ${frame(1130,220,460,430,PS(2)-0.2,
+   photo('05_albir-garden_vista-general.jpg',PS(2)-0.2,'center 40%',1.02)+photo('06_albir-garden_piscina-palmeras.jpg',PS(2)+3.2,'center',1.02)+photo('07_albir-garden_aquagarden-toboganes.jpg',W(2,'parque')-0.3,'center',1.02))}
+ ${box(1130,672,460,T('eyebrow','Albir Garden Resort','fade',PS(2)+0.3,'color:#8492A8;text-align:center'))}
 `);
 
 // 3b · Flamingo Albir — facturación y EBITDA (azul pizarra)
 const REV=[['2022',9.4],['2023',11.3],['2024',13.4],['2025',14.7]];
 function revBars(){const x0=160,bw=130,gap=50,base=800,scale=30;const t0=W(3,'facturación')-0.2;
- return REV.map(([y,v],i)=>{const h=Math.round(v*scale),x=x0+i*(bw+gap),at=i==0?W(3,'2022')-0.3:i==3?W(3,'2025')-0.3:t0+0.6+i*0.5;
+ return REV.map(([y,v],i)=>{const h=Math.round(v*scale),x=x0+i*(bw+gap),a0=W(3,'2022')-0.3,a3=W(3,'2025')-0.3,at=a0+(a3-a0)*i/3;
   return `<div class="abs" style="left:${x}px;top:${base-h}px;width:${bw}px;height:${h}px;background:${i==3?'#ADB9CC':'#8492A8'};transform-origin:bottom" ${A('growY',at,0.7)}></div>
   <div class="abs" style="left:${x-40}px;top:${base-h-52}px;width:${bw+80}px;text-align:center" ${A('up',at+0.4)}><span class="lbl" style="color:#fff;font-weight:600;font-size:28px;white-space:nowrap">${String(v).replace('.',',')}${NB}M€</span></div>
   <div class="abs lbl" style="left:${x}px;top:${base+16}px;width:${bw}px;text-align:center;color:#ADB9CC;font-size:26px" ${A('fade',at,0.4)}>${y}</div>`}).join('')}
@@ -100,7 +100,7 @@ scene(PS(4)-0.35,'accent',`
   ${chip('tent','Antes Camping La Media Legua',W(4,'antiguo')-0.2)}
   ${chip('calendar','Gestión de Taiga desde febrero de 2026',W(4,'febrero')-0.2)}
  </div>
- ${frame(160,640,760,310,W(4,'antiguo')-0.4,photo('13_taiga-benidorm_parcelas-caravanas.jpg',W(4,'antiguo')-0.4,'center 60%',1.08)+photo('10_taiga-benidorm_piscina-palmeras.jpg',W(4,'gestiona')-0.2,'center',1.08)+tag('Taiga Benidorm',W(4,'antiguo')))}
+ ${frame(160,630,820,360,W(4,'antiguo')-0.4,photo('13_taiga-benidorm_parcelas-caravanas.jpg',W(4,'antiguo')-0.4,'center 60%',1.08)+photo('10_taiga-benidorm_piscina-palmeras.jpg',W(4,'gestiona')-0.2,'center',1.08)+tag('Taiga Benidorm',W(4,'antiguo')))}
  <div class="abs" style="left:1000px;top:200px;width:760px;height:690px;background:#fff;border-radius:8px;padding:50px 60px" ${A('up',W(4,'seis')-0.5,0.6)}>
   ${T('eyebrow','Facturación de Sorito Albir','fade',W(4,'seis')-0.3,'color:#8492A8')}
   ${[['Todo 2025','1,44',1.44,W(4,'seis')-0.2],['1.er semestre 2026','1,56',1.56,W(4,'superado')-0.3]].map(([lab,val,v,at],i)=>{const w=Math.round(v/1.6*480);return `<div style="margin-top:${i?40:36}px">${T('lbl',lab,'fade',at,'color:#5D6879;font-size:26px')}
@@ -115,10 +115,10 @@ scene(PS(5)-0.35,'light',`
  ${eyebrow(160,150,'La operación',PS(5)-0.1)}
  ${box(160,200,900,T('lbl','Préstamo de','up',W(5,'préstamo')-0.2,'color:#5D6879'))}
  ${box(150,245,1100,T('h-xl',cnt(0,300000,W(5,'300000')-0.1,0.9)+NB+'€','up',W(5,'300000')-0.2,'font-size:170px;color:#394251'))}
- ${frame(1080,150,330,300,W(5,'firman')-0.3,photo('01_albir-garden_vista-aerea.jpg',W(5,'firman')-0.3,'center',1.06))}
- ${frame(1430,150,330,300,W(5,'firman')-0.1,photo('09_taiga-benidorm_piscina-principal.jpg',W(5,'firman')-0.1,'center',1.06))}
- ${box(1080,468,330,T('eyebrow','Flamingo Albir','fade',W(5,'firman'),'color:#8492A8;text-align:center')+T('lbl','Albir Garden Resort','fade',W(5,'firman')+0.1,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
- ${box(1430,468,330,T('eyebrow','Sorito Albir','fade',W(5,'firman')+0.2,'color:#8492A8;text-align:center')+T('lbl','Taiga Benidorm','fade',W(5,'firman')+0.3,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
+ ${frame(1030,140,360,330,W(5,'firman')-0.3,photo('01_albir-garden_vista-aerea.jpg',W(5,'firman')-0.3,'center',1.06))}
+ ${frame(1410,140,360,330,W(5,'firman')-0.1,photo('09_taiga-benidorm_piscina-principal.jpg',W(5,'firman')-0.1,'center',1.06))}
+ ${box(1030,486,360,T('eyebrow','Flamingo Albir','fade',W(5,'firman'),'color:#8492A8;text-align:center')+T('lbl','Albir Garden Resort','fade',W(5,'firman')+0.1,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
+ ${box(1410,486,360,T('eyebrow','Sorito Albir','fade',W(5,'firman')+0.2,'color:#8492A8;text-align:center')+T('lbl','Taiga Benidorm','fade',W(5,'firman')+0.3,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
  <div class="abs row" style="left:160px;top:470px;gap:20px">${chip('calendar','6 meses',W(5,'seis')-0.2)}${chip('docCheck','Circulante · pago a proveedores',W(5,'proveedores')-0.4)}</div>
  <div class="abs" style="left:160px;top:610px;width:760px;height:250px;border-radius:8px;background:#8492A8;padding:40px 46px" ${A('up',W(5,'firman')-0.3,0.6)}>
   ${T('eyebrow','Cotitularidad','fade',W(5,'firman')-0.2,'color:#fff')}
@@ -134,9 +134,9 @@ const stepBox=(x,icon,title,at)=>`<div class="abs col" style="left:${x}px;top:36
 scene(PS(6)-0.35,'dark',`
  ${eyebrow(160,150,'Antes de ofrecerla',PS(6)-0.1,'#ADB9CC')}
  ${stepBox(160,'docSearch','Análisis de riesgos',W(6,'análisis')-0.2)}
- <div class="abs" style="left:600px;top:444px;width:300px;height:2px;background:#8492A8;transform-origin:left" ${A('grow',W(6,'comité')-0.6,0.5)}></div>
+ <div class="abs" style="left:455px;top:444px;width:430px;height:2px;background:#8492A8;transform-origin:left" ${A('grow',W(6,'comité')-0.6,0.5)}></div>
  ${stepBox(760,'people','Comité de inversión',W(6,'comité')-0.2)}
- <div class="abs" style="left:1200px;top:444px;width:220px;height:2px;background:#8492A8;transform-origin:left" ${A('grow',W(6,'validado')-0.6,0.5)}></div>
+ <div class="abs" style="left:1055px;top:444px;width:365px;height:2px;background:#8492A8;transform-origin:left" ${A('grow',W(6,'validado')-0.6,0.5)}></div>
  <div class="abs row" style="left:1420px;top:385px;gap:20px;padding:24px 40px 24px 28px;border-radius:12px;background:#8492A8" ${A('pop',W(6,'validado')-0.1,0.5)}>${ico('check',W(6,'validado'),64,'color:#fff')}<span class="h2" style="color:#fff">Aprobada</span></div>
  ${box(160,690,1600,T('body','Capacidad de repago de ambas sociedades validada','words',W(6,'capacidad')-0.2,'color:#ADB9CC;text-align:center;font-size:32px'))}
 `);
@@ -164,7 +164,7 @@ scene(PS(9)-0.35,'dark',`
 `);
 
 // 7b · Rentabilidad y calendario de pagos — blanco
-const rate=(y,label,val,at,note='')=>`<div class="abs" style="left:160px;top:${y}px;width:640px;height:${note?250:200}px;border-radius:8px;background:#F4F6F9;padding:30px 40px" ${A('up',at-0.2,0.6)}>${T('eyebrow',label,'fade',at,'color:#8492A8')}${T('h-xl',val,'up',at+0.05,'font-size:96px;margin-top:10px;color:#394251')}${note?T('lbl',note,'up',W(10,'garantizada')-0.3,'font-size:26px;color:#5D6879;margin-top:6px'):''}</div>`;
+const rate=(y,label,val,at,note='')=>`<div class="abs" style="left:160px;top:${y}px;width:640px;height:${note?272:200}px;border-radius:8px;background:#F4F6F9;padding:30px 40px" ${A('up',at-0.2,0.6)}>${T('eyebrow',label,'fade',at,'color:#8492A8')}${T('h-xl',val,'up',at+0.05,'font-size:96px;margin-top:10px;color:#394251')}${note?T('lbl',note,'up',W(10,'garantizada')-0.3,'font-size:26px;color:#5D6879;margin-top:24px'):''}</div>`;
 // barras apiladas: capital + intereses (+ bonus en el mes 6)
 const PAYS=[{m:'Mes 3',tot:156375,seg:[['Capital',150000,'#8492A8'],['Intereses',6375,'#394251']],at:W(11,'tercer')-0.2},
  {m:'Mes 6',tot:155438,seg:[['Capital',150000,'#8492A8'],['Intereses',3188,'#394251'],['Bonus a éxito',2250,'#ADB9CC']],at:W(11,'sexto')-0.2}];
@@ -182,7 +182,7 @@ scene(PS(10)-0.35,'light',`
  ${box(960,150,800,T('eyebrow','Calendario de pagos','fade',W(11,'capital')-0.2,'color:#8492A8'))}
  <div class="abs" style="left:950px;top:820px;width:800px;height:2px;background:#D6DCE6;transform-origin:left" ${A('grow',W(11,'capital')-0.2,0.6)}></div>
  ${stack()}
- <div class="abs" style="left:160px;top:760px;width:640px;height:110px;border-radius:8px;background:#394251;padding:0 40px;display:flex;align-items:center" ${A('up',W(11,'apertura')-0.2,0.6)}><span class="lbl" style="color:#fff;font-size:30px;white-space:nowrap">Beneficio total: <b style="color:#fff">${fmt(11813)}${NB}€</b> sobre ${fmt(300000)}${NB}€</span></div>
+ <div class="abs" style="left:160px;top:760px;width:640px;height:110px;border-radius:8px;background:#394251;padding:0 40px;display:flex;align-items:center" ${A('up',W(11,'vencimiento')-0.2,0.6)}><span class="lbl" style="color:#fff;font-size:30px;white-space:nowrap">Beneficio total: <b style="color:#fff">${fmt(11813)}${NB}€</b> sobre ${fmt(300000)}${NB}€</span></div>
 `);
 
 // 8 · Cómo participar — azul pizarra
