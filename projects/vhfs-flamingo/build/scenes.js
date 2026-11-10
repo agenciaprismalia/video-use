@@ -19,9 +19,9 @@ scene(0,'dark',`
  <div class="abs row" style="left:0;width:1920px;top:300px;justify-content:center;gap:180px">
   <div class="col">${T('h-xl',cnt(0,120,W(0,'120')-0.2,1.2,true),'up',W(0,'120')-0.3,'font-size:200px;color:#fff')}${T('lbl','operaciones cerradas','up',W(0,'operaciones')-0.1,'color:var(--acc5);margin-top:34px')}</div>
   <div style="width:2px;height:300px;background:var(--acc9)" ${A('growY',W(0,'18')-0.5,0.5)}></div>
-  <div class="col">${T('h-xl','18,1'+NB+'M€','up',W(0,'18')-0.2,'font-size:200px;color:#fff;white-space:nowrap')}${T('lbl','financiados','up',W(0,'financiados')-0.2,'color:var(--acc5);margin-top:34px')}</div>
+  <div class="col">${T('h-xl','18,1'+NB+'M€','up',W(0,'18')-0.2,'font-size:200px;color:#fff;white-space:nowrap')}${T('lbl','financiados','up',W(0,'18')+0.25,'color:var(--acc5);margin-top:34px')}</div>
  </div>
- ${box(0,720,1920,T('body','Cifras a cierre de octubre de 2026','fade',W(0,'financiados'),'text-align:center;font-size:26px;color:var(--acc5)'))}
+ ${box(0,720,1920,T('body','Cifras a cierre de octubre de 2026','fade',W(0,'18')+0.5,'text-align:center;font-size:26px;color:var(--acc5)'))}
 `,{noCorner:true});
 
 // 1b · Apertura — blanco (sin fotos): Vannilo Holding Financial Services presenta Flamingo
