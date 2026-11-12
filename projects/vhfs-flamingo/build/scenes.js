@@ -154,8 +154,8 @@ scene(PS(9)-0.35,'dark',`
 `);
 
 // 7b · Rentabilidad y calendario de pagos — blanco (sin TIN; tres pagos de capital)
-const PAYS=[{m:'Mes 4',at:W(11,'cuarto')-0.2,bonus:false},{m:'Mes 5',at:W(11,'quinto')-0.2,bonus:false},{m:'Mes 6',at:W(11,'sexto')-0.2,bonus:true}];
-function stack(){const base=760,bw=150,capH=300,intH=26,bonH=40;return PAYS.map((p,i)=>{const x=960+i*270;let h='';
+const PAYS=[{m:'Mes 4',at:W(11,'cuarto')-0.2,bonus:false,intH:60},{m:'Mes 5',at:W(11,'quinto')-0.2,bonus:false,intH:10},{m:'Mes 6',at:W(11,'sexto')-0.2,bonus:true,intH:5}]; // intereses 12:2:1 (5 px/unidad), mínimo 4 px
+function stack(){const base=760,bw=150,capH=300,bonH=16;return PAYS.map((p,i)=>{const x=960+i*270,intH=Math.max(4,p.intH);let h='';
   h+=`<div class="abs" style="left:${x}px;top:${base-capH}px;width:${bw}px;height:${capH}px;background:#8492A8;transform-origin:bottom" ${A('growY',p.at,0.6)}></div>`;
   h+=`<div class="abs" style="left:${x}px;top:${base-capH-intH}px;width:${bw}px;height:${intH}px;background:#394251;transform-origin:bottom" ${A('growY',p.at+0.3,0.5)}></div>`;
   if(p.bonus)h+=`<div class="abs" style="left:${x}px;top:${base-capH-intH-bonH}px;width:${bw}px;height:${bonH}px;background:#ADB9CC;transform-origin:bottom" ${A('growY',W(11,'bonus')-0.2,0.5)}></div>`;
@@ -196,8 +196,8 @@ scene(PS(13)-0.35,'dark',`
   <div class="col">${T('h-xl','23,66'+NB+'M€','up',W(13,'financiado')-0.2,'font-size:190px;color:#fff;white-space:nowrap')}${T('lbl','financiados','up',W(13,'financiado')+0.25,'color:#ADB9CC;margin-top:34px')}</div>
  </div>
  <div class="abs row" style="left:0;width:1920px;top:690px;justify-content:center;gap:28px">
-  <div style="background:#2A313C;border-radius:8px;padding:22px 34px" ${A('up',W(13,'ramas')-0.2)}><span class="lbl" style="color:#ADB9CC;font-size:28px">Rama financiera: <b style="color:#fff">120 operaciones · 18,1${NB}M€</b></span></div>
-  <div style="background:#2A313C;border-radius:8px;padding:22px 34px" ${A('up',W(13,'inmobiliaria')-0.3)}><span class="lbl" style="color:#ADB9CC;font-size:28px">Rama inmobiliaria: <b style="color:#fff">14 operaciones · 5,56${NB}M€</b></span></div>
+  <div style="background:#2A313C;border-radius:8px;padding:22px 34px" ${A('up',W(13,'financiado')+0.8)}><span class="lbl" style="color:#ADB9CC;font-size:28px">Rama financiera: <b style="color:#fff">120 operaciones · 18,1${NB}M€</b></span></div>
+  <div style="background:#2A313C;border-radius:8px;padding:22px 34px" ${A('up',W(13,'financiado')+1.1)}><span class="lbl" style="color:#ADB9CC;font-size:28px">Rama inmobiliaria: <b style="color:#fff">14 operaciones · 5,56${NB}M€</b></span></div>
  </div>
 `);
 
