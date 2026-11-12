@@ -63,7 +63,7 @@ scene(PS(2)-0.35,'light',`
 // 3b · Flamingo Albir — facturación y EBITDA (azul pizarra)
 const REV=[['2022',9.4],['2023',11.3],['2024',13.4],['2025',14.7]];
 function revBars(){const x0=160,bw=130,gap=50,base=800,scale=30;const t0=W(3,'facturación')-0.2;
- return REV.map(([y,v],i)=>{const h=Math.round(v*scale),x=x0+i*(bw+gap),a0=W(3,'2022')-0.3,a3=W(3,'2025')-0.3,at=a0+(a3-a0)*i/3;
+ return REV.map(([y,v],i)=>{const h=Math.round(v*scale),x=x0+i*(bw+gap),a0=W(3,'9,4')-0.2,a3=W(3,'14,7')-0.2,at=a0+(a3-a0)*i/3;
   return `<div class="abs" style="left:${x}px;top:${base-h}px;width:${bw}px;height:${h}px;background:${i==3?'#ADB9CC':'#8492A8'};transform-origin:bottom" ${A('growY',at,0.7)}></div>
   <div class="abs" style="left:${x-40}px;top:${base-h-52}px;width:${bw+80}px;text-align:center" ${A('up',at+0.4)}><span class="lbl" style="color:#fff;font-weight:600;font-size:28px;white-space:nowrap">${String(v).replace('.',',')}${NB}M€</span></div>
   <div class="abs lbl" style="left:${x}px;top:${base+16}px;width:${bw}px;text-align:center;color:#ADB9CC;font-size:26px" ${A('fade',at,0.4)}>${y}</div>`}).join('')}
