@@ -90,7 +90,7 @@ scene(PS(4)-0.35,'accent',`
   ${chip('tent','Antes Camping La Media Legua',W(4,'antiguo')-0.2)}
   ${chip('calendar','Gestión de Taiga desde febrero de 2026',W(4,'febrero')-0.2)}
  </div>
- ${frame(160,630,820,360,W(4,'antiguo')-0.4,photo('13_taiga-benidorm_parcelas-caravanas.jpg',W(4,'antiguo')-0.4,'center 60%',1.08)+photo('10_taiga-benidorm_piscina-palmeras.jpg',W(4,'gestiona')-0.2,'center',1.08)+tag('Taiga Benidorm',W(4,'antiguo')))}
+ ${frame(160,630,820,330,W(4,'antiguo')-0.4,photo('13_taiga-benidorm_parcelas-caravanas.jpg',W(4,'antiguo')-0.4,'center 60%',1.08)+photo('10_taiga-benidorm_piscina-palmeras.jpg',W(4,'gestiona')-0.2,'center',1.08)+tag('Taiga Benidorm',W(4,'antiguo')))}
  <div class="abs" style="left:1000px;top:200px;width:760px;height:690px;background:#fff;border-radius:8px;padding:50px 60px" ${A('up',W(4,'seis')-0.5,0.6)}>
   ${T('eyebrow','Facturación de Sorito Albir','fade',W(4,'seis')-0.3,'color:#8492A8')}
   ${[['Todo 2025','1,44',1.44,W(4,'seis')-0.2],['1.er semestre 2026','1,56',1.56,W(4,'superado')-0.3]].map(([lab,val,v,at],i)=>{const w=Math.round(v/1.6*480);return `<div style="margin-top:${i?40:36}px">${T('lbl',lab,'fade',at,'color:#5D6879;font-size:26px')}
@@ -181,7 +181,8 @@ scene(PS(12)-0.35,'dark',`
  ${eyebrow(160,170,'Cómo participar',PS(12)-0.1,'#ADB9CC')}
  ${part(160,'coin',W(12,'inversión')-0.1,'Ticket mínimo',cnt(0,10000,W(12,'10000')-0.1,0.7)+NB+'€')}
  ${part(1000,'calendar',W(12,'plazo')-0.1,'Fecha límite','25/11/2026')}
- <div class="abs row" style="left:160px;top:690px;gap:24px" ${A('up',W(12,'relación')-0.2)}>${disc('people',W(12,'relación')-0.1,100)}<span class="h3" style="color:#fff">Equipo de Relación con Inversores</span><div class="row pill" style="gap:14px;border-color:#5D6879;margin-left:12px" ${A('up',W(12,'relación')+0.3)}>${ico('mail',W(12,'relación')+0.35,36,'color:#ADB9CC')}<span class="lbl" style="font-size:28px;color:#fff">inversores@vanniloholding.com</span></div></div>
+ <div class="abs row" style="left:160px;top:690px;gap:24px" ${A('up',W(12,'relación')-0.2)}>${disc('people',W(12,'relación')-0.1,100)}<span class="h3" style="color:#fff">Equipo de Relación con Inversores</span></div>
+ <div class="abs row" style="left:1000px;top:690px;height:100px"><div class="row pill" style="gap:14px;border-color:#5D6879" ${A('up',W(12,'relación')+0.3)}>${ico('mail',W(12,'relación')+0.35,36,'color:#ADB9CC')}<span class="lbl" style="font-size:28px;color:#fff">inversores@vanniloholding.com</span></div></div>
 `);
 
 // 9a · Track record — azul pizarra, antes del plano final
