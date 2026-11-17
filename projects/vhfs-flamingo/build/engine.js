@@ -55,6 +55,7 @@ function render(t){
   let txt='';if(SUBS_ENABLED&&t<SUBS_OFF)for(const c of CH){if(t>=c.s-0.05&&t<c.hide){txt=c.txt;break}}
   if(subEl.textContent!==txt)subEl.textContent=txt;
   document.getElementById('subs').className=txt?'on':'';
+  {const sc=SC[top],f=document.getElementById('foot');f.style.color=sc.bg==='light'?'#8492A8':sc.bg==='dark'?'#ADB9CC':'#E7EAEE';document.getElementById('footnote').style.display=(sc.opt&&sc.opt.note)?'block':'none';}
   subEl.style.display=txt?'inline-block':'none';
 }
 window.render=render;window.TOTAL=TL.total;

@@ -18,7 +18,7 @@ const frame=(x,y,w,h,at,inner)=>`<div class="abs" style="left:${x}px;top:${y}px;
 scene(0,'light',`
  <div class="abs" style="left:660px;top:150px;width:600px" ${A('wipe',W(0,'vannilo')-0.2,0.9)}>${LOGO}</div>
  ${box(0,305,1920,T('lbl','Vannilo Holding Financial Services presenta','words',W(0,'vannilo')+0.2,'color:#101010;font-weight:400;text-align:center'))}
- <div class="abs row" style="left:0;width:1920px;top:375px;justify-content:center"><div class="pill eyebrow" style="border-color:#D6DCE6;padding:12px 28px;letter-spacing:.28em;color:#8492A8" ${A('up',W(0,'oportunidad')-0.2)}>Oportunidad de inversión</div></div>
+ <div class="abs row" style="left:0;width:1920px;top:375px;justify-content:center"><div class="pill eyebrow" style="border-color:#D6DCE6;padding:12px 28px;letter-spacing:.28em;color:#8492A8" ${A('up',W(0,'oportunidad')-0.2)}>Oportunidad de inversión financiera</div></div>
  <div class="abs row" style="left:0;width:1920px;top:465px;justify-content:center;gap:20px">${chip('office','Hotelero',W(0,'hotelero')-0.2)}${chip('sun','Costa Blanca',W(0,'costa')-0.2)}</div>
  ${box(0,590,1920,T('h-xl','Flamingo','up',W(0,'flamingo')-0.15,'font-size:200px;color:#394251;text-align:center'))}
 `,{noCorner:true});
@@ -105,14 +105,14 @@ scene(PS(5)-0.35,'light',`
  ${eyebrow(160,150,'La operación',PS(5)-0.1)}
  ${box(160,200,900,T('lbl','Préstamo de','up',W(5,'préstamo')-0.2,'color:#5D6879'))}
  ${box(150,245,1100,T('h-xl',cnt(0,300000,W(5,'300000')-0.1,0.9)+NB+'€','up',W(5,'300000')-0.2,'font-size:170px;color:#394251'))}
- ${frame(1030,140,360,330,W(5,'firman')-0.3,photo('01_albir-garden_vista-aerea.jpg',W(5,'firman')-0.3,'center',1.06))}
- ${frame(1410,140,360,330,W(5,'firman')-0.1,photo('09_taiga-benidorm_piscina-principal.jpg',W(5,'firman')-0.1,'center',1.06))}
- ${box(1030,486,360,T('eyebrow','Flamingo Albir','fade',W(5,'firman'),'color:#8492A8;text-align:center')+T('lbl','Albir Garden Resort','fade',W(5,'firman')+0.1,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
- ${box(1410,486,360,T('eyebrow','Sorito Albir','fade',W(5,'firman')+0.2,'color:#8492A8;text-align:center')+T('lbl','Taiga Benidorm','fade',W(5,'firman')+0.3,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
+ ${frame(1030,140,360,330,W(5,'ambas')-0.3,photo('01_albir-garden_vista-aerea.jpg',W(5,'ambas')-0.3,'center',1.06))}
+ ${frame(1410,140,360,330,W(5,'ambas')-0.1,photo('09_taiga-benidorm_piscina-principal.jpg',W(5,'ambas')-0.1,'center',1.06))}
+ ${box(1030,486,360,T('eyebrow','Flamingo Albir','fade',W(5,'ambas'),'color:#8492A8;text-align:center')+T('lbl','Albir Garden Resort','fade',W(5,'ambas')+0.1,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
+ ${box(1410,486,360,T('eyebrow','Sorito Albir','fade',W(5,'ambas')+0.2,'color:#8492A8;text-align:center')+T('lbl','Taiga Benidorm','fade',W(5,'ambas')+0.3,'color:#394251;text-align:center;font-size:26px;margin-top:6px'))}
  <div class="abs row" style="left:160px;top:470px;gap:20px">${chip('calendar','6 meses',W(5,'seis')-0.2)}${chip('docCheck','Circulante · pago a proveedores',W(5,'proveedores')-0.4)}</div>
- <div class="abs" style="left:160px;top:610px;width:760px;height:250px;border-radius:8px;background:#8492A8;padding:40px 46px" ${A('up',W(5,'firman')-0.3,0.6)}>
-  ${T('eyebrow','Cotitularidad','fade',W(5,'firman')-0.2,'color:#fff')}
-  <div class="row" style="gap:26px;margin-top:22px">${disc('building',W(5,'firman')-0.1,96)}${disc('tent',W(5,'firman')+0.1,96)}${T('h3','Firman las dos sociedades','up',W(5,'firman'),'color:#fff')}</div>
+ <div class="abs" style="left:160px;top:610px;width:760px;height:250px;border-radius:8px;background:#8492A8;padding:40px 46px" ${A('up',W(5,'ambas')-0.3,0.6)}>
+  ${T('eyebrow','Cotitularidad','fade',W(5,'ambas')-0.2,'color:#fff')}
+  <div class="row" style="gap:26px;margin-top:22px">${disc('building',W(5,'ambas')-0.1,96)}${disc('tent',W(5,'ambas')+0.1,96)}${T('h3','Firman las dos sociedades','up',W(5,'ambas'),'color:#fff')}</div>
  </div>
  <div class="abs" style="left:980px;top:610px;width:780px;height:250px;border-radius:8px;background:#F4F6F9;padding:40px 46px" ${A('up',W(5,'flujo')-0.3,0.6)}>
   <div class="row" style="gap:26px">${disc('drop',W(5,'flujo')-0.1,96)}${T('h3','Devolución con el flujo de caja operativo de ambas sociedades','up',W(5,'flujo'),'color:#394251;font-size:38px')}</div>
@@ -158,24 +158,21 @@ const PAYS=[{m:'Mes 4',at:W(11,'cuarto')-0.2,bonus:false,intH:60},{m:'Mes 5',at:
 function stack(){const base=760,bw=150,capH=300,bonH=16;return PAYS.map((p,i)=>{const x=960+i*270,intH=Math.max(4,p.intH);let h='';
   h+=`<div class="abs" style="left:${x}px;top:${base-capH}px;width:${bw}px;height:${capH}px;background:#8492A8;transform-origin:bottom" ${A('growY',p.at,0.6)}></div>`;
   h+=`<div class="abs" style="left:${x}px;top:${base-capH-intH}px;width:${bw}px;height:${intH}px;background:#394251;transform-origin:bottom" ${A('growY',p.at+0.3,0.5)}></div>`;
-  if(p.bonus)h+=`<div class="abs" style="left:${x}px;top:${base-capH-intH-bonH}px;width:${bw}px;height:${bonH}px;background:#ADB9CC;transform-origin:bottom" ${A('growY',W(11,'bonus')-0.2,0.5)}></div>`;
+  if(p.bonus)h+=`<div class="abs" style="left:${x}px;top:${base-capH-intH-bonH}px;width:${bw}px;height:${bonH}px;background:#ADB9CC;transform-origin:bottom" ${A('growY',W(11,'sexto')+0.4,0.5)}></div>`;
   h+=`<div class="abs lbl" style="left:${x-20}px;top:${base+14}px;width:${bw+40}px;text-align:center;color:#5D6879;font-size:26px" ${A('fade',p.at,0.4)}>${p.m}</div>`;
-  h+=`<div class="abs" style="left:${x-25}px;top:${base+58}px;width:${bw+50}px;text-align:center" ${A('fade',p.at+0.4,0.5)}><span class="body" style="font-size:20px;color:#101010;line-height:1.45">${fmt(100000)}${NB}€ de capital<br>+ intereses${p.bonus?`<br><span ${A('fade',W(11,'bonus')-0.1,0.4)}>+ bonus a éxito de 2.250${NB}€</span>`:''}</span></div>`;
+  h+=`<div class="abs" style="left:${x-25}px;top:${base+58}px;width:${bw+50}px;text-align:center" ${A('fade',p.at+0.4,0.5)}><span class="body" style="font-size:20px;color:#101010;line-height:1.45">${fmt(100000)}${NB}€ de capital<br>+ intereses${p.bonus?`<br><span ${A('fade',W(11,'sexto')+0.5,0.4)}>+ bonus a éxito</span>`:''}</span></div>`;
   return h}).join('')}
 scene(PS(10)-0.35,'light',`
  ${eyebrow(160,150,'Cifras para el inversor',PS(10)-0.1)}
- <div class="abs" style="left:160px;top:220px;width:680px;height:440px;border-radius:8px;background:#F4F6F9;padding:36px 44px" ${A('up',W(10,'rentabilidad')-0.3,0.6)}>
+ <div class="abs" style="left:160px;top:220px;width:680px;height:420px;border-radius:8px;background:#F4F6F9;padding:40px 44px" ${A('up',W(10,'rentabilidad')-0.3,0.6)}>
   ${T('eyebrow','Rentabilidad estimada (TIR)*','fade',W(10,'rentabilidad')-0.1,'color:#8492A8')}
-  ${T('h-xl','10,70'+NB+'%','up',W(10,'10,70')-0.2,'font-size:120px;margin-top:12px;color:#394251')}
-  ${T('body','Incluye un interés fijo del 8,5'+NB+'% anual más un bonus condicionado de 2.250'+NB+'€','up',W(10,'incluye')-0.1,'font-size:30px;color:#101010;margin-top:22px;line-height:1.4')}
-  ${T('body','*Rentabilidad no garantizada','fade',W(10,'incluye')+0.4,'font-size:20px;color:#5D6879;margin-top:22px')}
+  ${T('h-xl','10,66'+NB+'%','up',W(10,'10,66')-0.2,'font-size:130px;margin-top:14px;color:#394251')}
+  ${T('body','Incluye un interés fijo y un bonus condicionado al éxito de la operación','up',W(10,'incluye')-0.1,'font-size:32px;color:#101010;margin-top:26px;line-height:1.4')}
  </div>
  ${box(960,150,800,T('eyebrow','Calendario de pagos','fade',W(11,'capital')-0.2,'color:#8492A8'))}
  <div class="abs" style="left:940px;top:760px;width:820px;height:2px;background:#D6DCE6;transform-origin:left" ${A('grow',W(11,'capital')-0.2,0.6)}></div>
  ${stack()}
- <div class="abs" style="left:160px;top:700px;width:680px;height:110px;border-radius:8px;background:#394251;padding:0 44px;display:flex;align-items:center" ${A('up',W(11,'sexto')+0.2,0.6)}><span class="lbl" style="color:#fff;font-size:32px;white-space:nowrap">Beneficio total: <b style="color:#fff">${fmt(12875)}${NB}€</b></span></div>
- ${box(160,826,680,T('body','Simulacro sobre el total del importe a financiar, TIR a ajustar en función del ticket individual','fade',W(11,'sexto')+0.5,'font-size:20px;color:#5D6879;line-height:1.45'))}
-`);
+`,{note:true});
 
 // 8 · Cómo participar — azul pizarra
 const part=(x,icon,at,label,val)=>`<div class="abs" style="left:${x}px;top:300px;width:760px;height:320px;background:#2A313C;border-radius:8px;padding:50px 60px" ${A('up',at-0.2,0.6)}>
@@ -184,7 +181,7 @@ scene(PS(12)-0.35,'dark',`
  ${eyebrow(160,170,'Cómo participar',PS(12)-0.1,'#ADB9CC')}
  ${part(160,'coin',W(12,'inversión')-0.1,'Ticket mínimo',cnt(0,10000,W(12,'10000')-0.1,0.7)+NB+'€')}
  ${part(1000,'calendar',W(12,'plazo')-0.1,'Fecha límite','25/11/2026')}
- <div class="abs row" style="left:160px;top:690px;gap:24px" ${A('up',W(12,'relación')-0.2)}>${disc('people',W(12,'relación')-0.1,100)}<span class="h3" style="color:#fff">Equipo de Relación con Inversores</span></div>
+ <div class="abs row" style="left:160px;top:690px;gap:24px" ${A('up',W(12,'relación')-0.2)}>${disc('people',W(12,'relación')-0.1,100)}<span class="h3" style="color:#fff">Equipo de Relación con Inversores</span><div class="row pill" style="gap:14px;border-color:#5D6879;margin-left:12px" ${A('up',W(12,'relación')+0.3)}>${ico('mail',W(12,'relación')+0.35,36,'color:#ADB9CC')}<span class="lbl" style="font-size:28px;color:#fff">inversores@vanniloholding.com</span></div></div>
 `);
 
 // 9a · Track record — azul pizarra, antes del plano final

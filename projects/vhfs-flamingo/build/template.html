@@ -51,13 +51,17 @@ i.icon{display:block}
 .pill{border:2.5px solid currentColor;border-radius:12px;padding:10px 26px}
 .wd{display:inline-block;white-space:pre}
 /* subtitles */
-#subs{position:absolute;left:0;right:0;bottom:0;height:104px;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:999}
+#subs{position:absolute;left:0;right:0;bottom:78px;height:104px;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:999}
 #subs.on{background:#F4F6F9;box-shadow:inset 0 1px 0 #D6DCE6}
 #subs span{font-family:'Inter';font-weight:500;font-size:32px;color:#394251;line-height:1.3;max-width:1500px;text-align:center;padding:8px 22px;border-radius:6px}
 </style></head>
 <body>
 <div id="stage"></div>
 <div id="subs"><span id="sub"></span></div>
+<div id="foot" style="position:absolute;left:0;right:0;bottom:0;z-index:998;pointer-events:none;text-align:center;font-family:'Inter';font-weight:400;font-size:19px;line-height:1.5;padding-bottom:18px">
+ <div>Importe: 300.000&nbsp;€ · Ticket mínimo: 10.000&nbsp;€ · Plazo: 6 meses · TIR inversor: 10,66&nbsp;%* · Fecha límite: 25/11/2026</div>
+ <div id="footnote" style="display:none">*Rentabilidad no garantizada. Simulacro sobre el total del importe a financiar, TIR a ajustar en función del ticket individual</div>
+</div>
 <script>
 const TL=/*TL*/;
 const LOGO=`/*LOGO*/`;

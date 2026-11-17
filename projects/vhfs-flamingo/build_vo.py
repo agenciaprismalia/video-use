@@ -3,7 +3,7 @@
 import json,subprocess,unicodedata,difflib,os
 D='/tmp/claude-0/-home-user-video-use/75d14596-cf69-57f6-b09c-3e5adc4db6d4/scratchpad/flamingo/'
 import os
-TAKE=os.environ.get('TAKE','el3')  # el3 = voz femenina, el4 = voz masculina
+TAKE=os.environ.get('TAKE','el3')  # el3/el5 = voz femenina, el4 = voz masculina
 SRC=D+f'vo/{TAKE}/take.mp3'; STT=D+f'vo/{TAKE}/take.stt.json'
 OVR={}
 for f in []:
