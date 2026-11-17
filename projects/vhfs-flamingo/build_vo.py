@@ -9,6 +9,8 @@ OVR={}
 for f in []:
     if os.path.exists(D+'vo/el/'+f): OVR[13]=(D+'vo/el/'+f, D+'vo/el/'+f.rsplit('.',1)[0]+'.stt.json'); break
 INTRO=0.7; TAIL=5.5
+# paragraphs kept on the timeline (their on-screen text still animates on the same cue) but not voiced
+MUTE={14}   # «Financiación privada para empresas»: the VO ends on «…ramas financiera e inmobiliaria»
 GAPS=[0.5,0.5,0.3,0.6,0.6,0.3,0.6,0.3,0.6,0.3,0.3,0.6,0.8,1.5,0]
 paras=json.load(open(D+'vo/paras.json'))
 def norm(w): return ''.join(c for c in unicodedata.normalize('NFD',w.lower()) if c.isalnum())
@@ -42,9 +44,10 @@ for i in range(len(paras)):
     dur=s1-s0; segs.append({'p':i,'start':round(t,3),'end':round(t+dur,3)}); parts.append((src,s0,s1,t))
     t+=dur+max(GAPS[i],natural)
 total=round(t+TAIL,3)
-json.dump({'words':words,'segs':segs,'total':total},open(D+'timeline.json','w'),ensure_ascii=False)
+json.dump({'words':words,'segs':segs,'total':total,'muted':sorted(MUTE)},open(D+'timeline.json','w'),ensure_ascii=False)
 os.makedirs(D+'vo/el/seg',exist_ok=True)
 inputs=[];flt=[]
+parts=[pt for i,pt in enumerate(parts) if i not in MUTE]
 for j,(src,s0,s1,off) in enumerate(parts):
     f=D+f'vo/el/seg/p{j:02d}.wav'
     pre='' if src==SRC else 'loudnorm=I=-24:TP=-3,'   # match level of the main take

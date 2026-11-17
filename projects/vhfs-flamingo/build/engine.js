@@ -21,7 +21,7 @@ document.querySelectorAll('[data-a]').forEach(el=>{
 const OUTS=[...document.querySelectorAll('[data-out]')].map(el=>({el,t:+el.dataset.out}));
 // subtitles
 const CH=[];(function(){
- const MAX=44;const byP={};for(const w of TL.words)(byP[w.p]=byP[w.p]||[]).push(w);
+ const MAX=44;const MUTED=TL.muted||[];const byP={};for(const w of TL.words)if(!MUTED.includes(w.p))(byP[w.p]=byP[w.p]||[]).push(w);
  const L=a=>a.map(x=>x.w).join(' ').length;
  function split(a){if(L(a)<=MAX||a.length<2)return [a];let best=1,bs=1e9;for(let i=1;i<a.length;i++){const l=L(a.slice(0,i)),r=L(a.slice(i));let sc=Math.abs(l-r);if(/[.,;:]$/.test(a[i-1].w))sc-=12;if(/^(y|o|de|a|en|con|la|el|del|que|los|las|un|una|su|sus)$/i.test(a[i-1].w))sc+=30;if(sc<bs){bs=sc;best=i}}return [...split(a.slice(0,best)),...split(a.slice(best))]}
  for(const p of Object.keys(byP)){let cl=[],cur=[];for(const w of byP[p]){cur.push(w);if(/[.;:]$/.test(w.w)||(/,$/.test(w.w)&&L(cur)>=18)){cl.push(cur);cur=[]}}if(cur.length)cl.push(cur);
