@@ -71,7 +71,7 @@ i.icon{display:block}
 <script>
 const TL=/*TL*/;
 const LOGO=`/*LOGO*/`;
-const SUBS_ENABLED=true;
+const SUBS_ENABLED=false;   // sin subtítulos (petición del cliente, 20/11)
 // ---------- timing helpers
 const nrm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 function W(p,word,n=0){const k=nrm(word);let c=0;for(const w of TL.words){if(w.p===p&&nrm(w.w).startsWith(k)){if(c===n)return w.s;c++}}throw new Error('word not found '+p+' '+word)}

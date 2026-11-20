@@ -69,15 +69,15 @@ scene(S2,'media',`
 
 // ---------------------------------------------------------------- 3 · El proyecto — blanco
 // Entrada: sobre la parcela seleccionada, el alzado se levanta desde el solar y pasa a su marco.
-const S3=Math.max(PS(2)-0.35,tP+3.0);
+const S3=Math.max(PS(2)-0.35,tP+2.2);
 const PR=[1169,390,132,161];                     // solar en pantalla (ortofoto 04 a 1,3x)
 const FR=[1240,140,520,690];                      // marco de los planos
 const SEC={w:467,h:455}, ALZ={w:492,h:700};
 const fit=(o,W_,H_)=>{const k=Math.min(W_/o.w,H_/o.h);return {w:o.w*k,h:o.h*k,x:(W_-o.w*k)/2,y:(H_-o.h*k)/2,k}};
 const fs=fit(SEC,FR[2]-48,FR[3]-48), fa=fit(ALZ,FR[2]-48,FR[3]-48);
-const tSec=Math.max(S3+2.3,W(2,'planta')-0.9);
+const tSec=Math.max(S3+2.3,W(2,'planta',1)-0.9);
 // cada planta se resalta cuando la voz la nombra (nunca antes de que esté la sección en pantalla)
-const FLOORS=[['Planta baja','Garaje y acceso',236,372,Math.max(W(2,'planta')-0.2,tSec+0.5)],
+const FLOORS=[['Planta baja','Garaje y acceso',236,372,Math.max(W(2,'planta',1)-0.2,tSec+0.5)],
               ['Primera planta','Salón comedor, cocina y terraza',124,234,Math.max(W(2,'primera')-0.2,tSec+1.5)],
               ['Segunda planta','2 dormitorios, baño completo y balcón',8,122,Math.max(W(2,'segunda')-0.2,tSec+2.5)]];
 const tFich=Math.max(W(2,'terreno')-0.5,FLOORS[2][4]+1.5);
