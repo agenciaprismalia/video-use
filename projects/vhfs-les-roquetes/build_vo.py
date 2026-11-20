@@ -14,6 +14,9 @@ TAKE = os.environ.get('TAKE', 'prov')
 paras = json.load(open(P + 'vo/paras.json'))
 voz = [p.strip() for p in open(P + 'vo/guion_voz.txt').read().split('\n\n') if p.strip()]
 assert len(voz) == len(paras) == 8
+# extra silence inserted into the real take (client: «medio segundo más» around how-to-participate and track record)
+# (paragraph, index of the voice word AFTER which the pause goes; -1 = before the paragraph), seconds
+PAUSES = [(6, -1, 0.5), (6, 'diciembre.', 0.5), (7, -1, 0.5), (7, 'inmobiliaria.', 0.5)]
 END_HOLD = 1.6      # after the last word: trajectory breakdown stays on screen
 END_CARD = 5.0      # final shot, no voice (§4 escena 9)
 TAIL_FADE = 0.0
@@ -55,6 +58,16 @@ else:
 # split the voice words back into paragraphs (by aligning the voice script), then map official words onto them
 vw = [(i, w) for i, p in enumerate(voz) for w in p.split()]
 vt = align([w for _, w in vw], stt)
+# pauses: cut points (mid-gap between two voice words) and how much later everything after them plays
+cuts = []
+if TAKE != 'prov':
+    for p_, after, sec in PAUSES:
+        idx = [k for k, (j, _) in enumerate(vw) if j == p_]
+        k = idx[0] - 1 if after == -1 else idx[[vw[x][1] for x in idx].index(after)]
+        cuts.append(((vt[k][1] + vt[k + 1][0]) / 2, sec))
+    cuts.sort()
+    shift = lambda t: t + sum(sec for c, sec in cuts if t > c)
+    vt = [(shift(a), shift(b)) for a, b in vt]
 words, segs = [], []
 for i, para in enumerate(paras):
     idx = [k for k, (j, _) in enumerate(vw) if j == i]
@@ -69,10 +82,26 @@ json.dump({'words': words, 'segs': segs, 'endcard': endcard, 'total': total, 'ta
           open(D + 'timeline.json', 'w'), ensure_ascii=False)
 if TAKE != 'prov':
     src = P + f'vo/{TAKE}/take.mp3'
+    # take split at the cut points (mid-gap, so no word is touched), pieces placed with the pauses; 15 ms fades
+    import numpy as np
+    SR = 48000
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', src, '-ac', '1', '-ar', str(SR), '-f', 'f32le', '-'],
+                         capture_output=True, check=True).stdout
+    x = np.frombuffer(raw, np.float32).astype(np.float64)
     s0 = stt[0]['start'] - 0.06
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{s0:.3f}', '-i', src, '-af',
-                    f'adelay={int((0.7 - 0.06) * 1000)}:all=1,apad=whole_dur={total},atrim=0:{total},aresample=48000',
-                    '-ac', '2', D + 'vo_master.wav'], check=True)
+    bounds = [s0] + [c for c, _ in cuts] + [len(x) / SR]
+    out = np.zeros(int((total + 1) * SR)); add = 0.0; fl = int(0.015 * SR)
+    for j in range(len(bounds) - 1):
+        a, b = int(bounds[j] * SR), int(bounds[j + 1] * SR)
+        piece = x[a:b].copy(); ramp = np.linspace(0, 1, fl)
+        piece[:fl] *= ramp; piece[-fl:] *= ramp[::-1]
+        at = int((bounds[j] + offset + add) * SR)
+        out[at:at + len(piece)] += piece
+        if j < len(cuts): add += cuts[j][1]
+    out = out[:int(total * SR)]
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-f', 'f64le', '-ar', str(SR), '-ac', '1', '-i', '-', '-ac', '2',
+                    D + 'vo_master.wav'], input=out.tobytes(), check=True)
+    print('pauses at', [(round(c + offset, 2), sec) for c, sec in cuts])
 else:
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', f'anullsrc=r=48000:cl=stereo', '-t', str(total),
                     D + 'vo_master.wav'], check=True)

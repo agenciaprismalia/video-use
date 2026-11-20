@@ -16,7 +16,7 @@ document.querySelectorAll('[data-a]').forEach(el=>{
   if(a.type==='words'){a.w=[];splitWords(el,a.w)}
   if(a.type==='draw'){a.paths=[...el.querySelectorAll('path')];a.paths.forEach(p=>{p.style.strokeDasharray='1 1'})}
   if(a.type==='count'){a.from=+el.dataset.from;a.to=+el.dataset.to;a.raw=!!el.dataset.raw}
-  if(a.type==='seq'){a.n=+el.dataset.n;a.pat=el.dataset.pat;a.cur=-1}
+  if(a.type==='seq'){a.n=+el.dataset.n;a.pat=el.dataset.pat;a.cur=-1;a.fps=+(el.dataset.fps||25)}
   if(a.type==='cam'){a.k=JSON.parse(el.dataset.k)}
   if(a.type==='rect'){a.r0=JSON.parse(el.dataset.r0);a.r1=JSON.parse(el.dataset.r1)}
   ANIMS.push(a);
@@ -51,7 +51,7 @@ function render(t){
      case 'growY':e.style.transform=`scaleY(${eio(x)})`;break;
      case 'kb':{const xx=clamp((t-a.at)/(a.d||7)),k0=+(e.dataset.k||1.12);e.style.opacity=clamp((t-a.at)/0.7);e.style.transform=`scale(${(k0-(k0-1)*xx).toFixed(4)})`;break}
      case 'wipe':e.style.clipPath=`inset(0 ${((1-eio(x))*100).toFixed(3)}% 0 0)`;e.style.opacity=x>0?1:0;break;
-     case 'seq':{const k=Math.max(0,Math.min(a.n-1,Math.floor((t-a.at)*25+1e-6)));if(k!==a.cur){a.cur=k;e.src=a.pat.replace('%03d',String(k).padStart(3,'0'));pend.push(e.decode().catch(()=>{}))}break}
+     case 'seq':{const k=Math.max(0,Math.min(a.n-1,Math.floor((t-a.at)*a.fps+1e-6)));if(k!==a.cur){a.cur=k;e.src=a.pat.replace('%03d',String(k).padStart(3,'0'));pend.push(e.decode().catch(()=>{}))}break}
      case 'cam':{// keyframes [[t,tx,ty,s],...] in absolute time; ease in-out between keys
        const K=a.k;let tx=K[0][1],ty=K[0][2],sc=K[0][3];for(let j=0;j+1<K.length;j++){const[t0,x0,y0,s0]=K[j],[t1,x1,y1,s1]=K[j+1];if(t>=t0){const q=eio(clamp((t-t0)/Math.max(1e-3,t1-t0)));tx=x0+(x1-x0)*q;ty=y0+(y1-y0)*q;sc=s0+(s1-s0)*q}}
        e.style.transform=`translate(${tx.toFixed(2)}px,${ty.toFixed(2)}px) scale(${sc.toFixed(5)})`;break}
